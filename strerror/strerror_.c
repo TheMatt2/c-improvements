@@ -40,12 +40,12 @@ NO_DISCARD const char* strerror_(int errnum);
 
 #endif /* STRERROR_H */
 
-// #define __STDC_WANT_LIB_EXT1__ 1
+#define __STDC_WANT_LIB_EXT1__ 1
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
 
-#pragma message "__STDC_LIB_EXT1__ " XSTR(__STDC_LIB_EXT1__)
+// #pragma message "__STDC_LIB_EXT1__ " XSTR(__STDC_LIB_EXT1__)
 
 
 
