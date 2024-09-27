@@ -25,6 +25,12 @@ NO_DISCARD const char* strerror_(int errnum);
 #define thread_local _Thread_local
 #endif
 
+// #define MAX(a, b) (a) > (b) ? (a) : (b)
+#define MAX(a,b) ({ \
+  __typeof__ (a) _a = (a); \
+  __typeof__ (b) _b = (b); \
+  _a > _b ? _a : _b; \
+})
 
 // Just call strerror() when safe.
 const char* strerror_mt_safe(int errnum)

@@ -45,9 +45,6 @@ NO_DISCARD const char* strerror_(int errnum);
 #include <stdio.h>
 #include <string.h>
 
-// #pragma message "__STDC_LIB_EXT1__ " XSTR(__STDC_LIB_EXT1__)
-
-
 
 /* strerror() is MT-safe for glibc >= 2.32 */
 #if __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 32

@@ -47,3 +47,4 @@ Preferability of Solutions
  - https://gcc.gnu.org/onlinedocs/gcc/C99-Thread-Local-Edits.html
  - https://man7.org/linux/man-pages/man3/printf.3.html
  - https://en.cppreference.com/w/c/string/byte/strerror
+ - https://github.com/tavianator/bfs/blob/c1ac8a73589f9d27704e6bd8f99d0c42fac2100f/src/bfstd.c#L329
