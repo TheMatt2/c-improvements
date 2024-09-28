@@ -5,38 +5,95 @@
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
+#include <stdbool.h>
 
+// Max function that only evaluates its values once
 #define MAX(a,b) ({ \
   __typeof__ (a) _a = (a); \
   __typeof__ (b) _b = (b); \
   _a > _b ? _a : _b; \
 })
 
+// Macro to get number of elements in array
+#define ARRAY_SIZE(x)  (sizeof(x) / sizeof((x)[0]))
+
+// Macro to put quotes around a macro
+#define XSTR(x) #x
+#define STR(x) XSTR(x)
+
+// Output Formatting
+#define ROWS 35
+#define COLUMNS 25
+
+struct test_func {
+    char *name;
+    const char* (*func)(int);
+};
+
+struct test_func test_funcs[] = {
+    {"strsignal", (void *) strsignal},
+    {"sigdescr_np", sigdescr_np}
+};
+
+size_t test_funcs_maxlen[ARRAY_SIZE(test_funcs)];
+
+void print_header()
+{
+    printf("### ");
+    for (size_t i = 0; i < ARRAY_SIZE(test_funcs) - 1; i++)
+    {
+        printf("%-" STR(COLUMNS) "s ", test_funcs[i].name);
+    }
+
+    // Last column
+    printf("%s\n", test_funcs[ARRAY_SIZE(test_funcs) - 1].name);
+}
+
+/*
+ * Print column with strsignal info
+ */
+void print_column(int signum)
+{
+    printf("%3d: ", signum);
+
+    for (size_t i = 0; i < ARRAY_SIZE(test_funcs); i++)
+    {
+        const char *msg = test_funcs[i].func(signum);
+        if (msg == NULL) msg = "(null)";
+        test_funcs_maxlen[i] = MAX(test_funcs_maxlen[i], strlen(msg));
+
+        if (i != ARRAY_SIZE(test_funcs) - 1)
+        {
+            printf("%-" STR(COLUMNS) "s ", msg);
+        }
+        else
+        {
+            printf("%s\n", msg);
+        }
+    }
+}
+
+void print_maxlen()
+{
+    printf("MAX  ");
+    for (size_t i = 0; i < ARRAY_SIZE(test_funcs) - 1; i++)
+    {
+        printf("%-" STR(COLUMNS) "zu ", test_funcs_maxlen[i]);
+    }
+
+    // Last column
+    printf("%zu\n", test_funcs_maxlen[ARRAY_SIZE(test_funcs_maxlen) - 1]);
+}
 
 int main()
 {
-    int maxlen = 0;
+    print_header();
 
-    printf("strsignal\n");
-    for (int i = 0; i < 70; i++)
+    for (size_t i = 0; i < ROWS; i++)
     {
-        const char *msg = strsignal(i);
-        printf("%d: %s\n", i, msg);
-        maxlen = MAX(maxlen, strlen(msg));
+        print_column(i);
     }
 
-    printf("Max length %d (+ \\0)\n", maxlen);
-
-    printf("sigdescr_np\n");
-    for (int i = 0; i < 35; i++)
-    {
-        const char *msg = sigdescr_np(i);
-        if (msg == NULL) msg = "(null)";
-        printf("%d: %s\n", i, msg);
-        maxlen = MAX(maxlen, strlen(msg));
-    }
-
-    printf("Max length %d (+ \\0)\n", maxlen);
-
+    print_maxlen();
     return 0;
 }
