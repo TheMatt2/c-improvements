@@ -1,33 +1,8 @@
-#include <stdio.h>
-#define XSTR(x) STR(x)
-#define STR(x) #x
+#include "strsignal_.h"
 
-#pragma message "GLIBC " XSTR(__GLIBC__) "." XSTR(__GLIBC_MINOR__)
-
-
-// strsignal_.h
-#ifndef STRSIGNAL_H
-#define STRSIGNAL_H
-
-/**
- * Convert a signal to a string for printing.
- * Must be thread safe.
- */
-
-#if __STDC_VERSION__ >= 202311L
-#define NO_DISCARD [[ nodiscard ]]
-#elif defined(__GNUC__)
-#define NO_DISCARD __attribute__ ((warn_unused_result))
-#else
-#define NO_DISCARD /* nothing */
-#endif
-
-NO_DISCARD const char* strsignal_(int signum);
-
-#endif /* STRSIGNAL_H */
-
+#include <stdio.h> // snprintf
 #include <string.h>
-
+#include <signal.h>
 
 /* Define thread_local for thread specific buffer */
 #if __STDC_VERSION__ <= 199901L
@@ -37,58 +12,194 @@ NO_DISCARD const char* strsignal_(int signum);
 #define thread_local _Thread_local
 #endif
 
+#ifndef TEST_STRSIGNAL
+// Allow specific functions to be linkable only if test macro is set.
+#define TEST_LINKAGE static inline
+#else
+#define TEST_LINKAGE inline
+#endif /* TEST_STRSIGNAL */
 
-/* strsignal() is defined for _GNU_SOURCE or _POSIX_C_SOURCE (glibc versions?) */
-#if _GNU_SOURCE || _POSIX_C_SOURCE >= 200809L
-#ifndef HAS_STRSIGNAL
-#define HAS_STRSIGNAL 1
-#endif
-#endif
-
-/* sigdescr_np() is defined for _GNU_SOURCE */
-#if _GNU_SOURCE
-#define HAS_SIGDESCR_NP 1
-#define HAS_SIGABBREV_NP 1
-#endif /* _GNU_SOURCE */
+// Longest EN error message on linux 24 characters.
+#define SIGBUF_LEN 25
+#define SIGBUF_UNKNOWN_LEN 18 /* "Unknown signal 34" */
 
 #if HAS_SIGDESCR_NP
 // sigdescr_np Solution.
 // Preferred due to built in thread safe
-const char* strsignal_(int signum)
+TEST_LINKAGE const char* strsignal_sigdescr(int signum)
 {
-    static thread_local char sigbuf[25] = {0};
-    const char *buf;
+    static thread_local char sigbuf[SIGBUF_UNKNOWN_LEN] = {0};
     // Call sigdescr_np() to get signal string
-    buf = sigdescr_np(signum);
+    const char *buf = sigdescr_np(signum);
     if (buf == NULL)
     {
-        snprintf(sigbuf, sizeof(sigbuf) - 1, "Unknown signal %d", signum);
+        snprintf(sigbuf, sizeof(sigbuf), "Unknown signal %d", signum);
         buf = sigbuf;
     }
 
     return buf;
 }
-#elif HAS_STRSIGNAL
-// POSIX General Solution.
+#endif
+
+#if HAS_STRSIGNAL
+// POSIX threadsafe wrapper around strsignal().
 #include <pthread.h>
 
 
-const char* strsignal_(int signum)
+TEST_LINKAGE const char* strsignal_posix(int signum)
 {
     // Thread local buffer for signal string.
-    // Longest EN error message on linux 24 characters.
-    static thread_local char sigbuf[25] = {0};
-    const char *buf;
+    static thread_local char sigbuf[SIGBUF_LEN] = {0};
     static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_lock(&mutex);
     // Call strsignal() to get signal string
-    buf = strsignal(signum);
+    const char *buf = strsignal(signum);
     // Copy to a thread specific buffer. Always leave null terminator.
     buf = strncpy(sigbuf, buf, sizeof(sigbuf) - 1);
     pthread_mutex_unlock(&mutex);
     return buf;
 }
-#else
-// Otherwise, strsignal is not defined, don't compile.
-#error "strerror not defined"
 #endif
+
+#if HAS_SYS_SIGLIST
+// GLIBC fallback solution. Used as strsignal() is not available
+// at default source, but sys_siglist is.
+TEST_LINKAGE const char* strsignal_sys_siglist(int signum)
+{
+    static thread_local char sigbuf[SIGBUF_UNKNOWN_LEN] = {0};
+    // Call sigdescr_np() to get signal string
+    const char *buf = NULL;
+    if (signum < NSIG && signum != 64)
+    {
+        buf = sys_siglist[signum];
+    }
+
+    if (buf == NULL)
+    {
+        snprintf(sigbuf, sizeof(sigbuf), "Unknown signal %d", signum);
+        buf = sigbuf;
+    }
+
+    return buf;
+}
+#endif
+
+TEST_LINKAGE const char* strsignal_hardcode(int signum)
+{
+    // ISO C says signal identifiers a MACROS, so they can be individually tested for
+    // and enabled.
+    switch (signum)
+    {
+#ifdef SIGHUP
+      case SIGHUP   : return "Hangup";
+#endif /* SIGHUP */
+#ifdef SIGINT
+      case SIGINT   : return "Interrupt";
+#endif /* SIGINT */
+#ifdef SIGQUIT
+      case SIGQUIT  : return "Quit";
+#endif /* SIGQUIT */
+#ifdef SIGILL
+      case SIGILL   : return "Illegal instruction";
+#endif /* SIGILL */
+#ifdef SIGTRAP
+      case SIGTRAP  : return "Trace/breakpoint trap";
+#endif /* SIGTRAP */
+#ifdef SIGABRT
+      case SIGABRT  : return "Aborted";
+#endif /* SIGABRT */
+#ifdef SIGBUS
+      case SIGBUS   : return "Bus error";
+#endif /* SIGBUS */
+#ifdef SIGFPE
+      case SIGFPE   : return "Floating point exception";
+#endif /* SIGFPE */
+#ifdef SIGKILL
+      case SIGKILL  : return "Killed";
+#endif /* SIGKILL */
+#ifdef SIGUSR1
+      case SIGUSR1  : return "User defined signal 1";
+#endif /* SIGUSR1 */
+#ifdef SIGSEGV
+      case SIGSEGV  : return "Segmentation fault";
+#endif /* SIGSEGV */
+#ifdef SIGUSR2
+      case SIGUSR2  : return "User defined signal 2";
+#endif /* SIGUSR2 */
+#ifdef SIGPIPE
+      case SIGPIPE  : return "Broken pipe";
+#endif /* SIGPIPE */
+#ifdef SIGALRM
+      case SIGALRM  : return "Alarm clock";
+#endif /* SIGALRM */
+#ifdef SIGTERM
+      case SIGTERM  : return "Terminated";
+#endif /* SIGTERM */
+#ifdef SIGSTKFLT
+      case SIGSTKFLT: return "Stack fault";
+#endif /* SIGSTKFLT */
+#ifdef SIGCHLD
+      case SIGCHLD  : return "Child exited";
+#endif /* SIGCHLD */
+#ifdef SIGCONT
+      case SIGCONT  : return "Continued";
+#endif /* SIGCONT */
+#ifdef SIGSTOP
+      case SIGSTOP  : return "Stopped (signal)";
+#endif /* SIGSTOP */
+#ifdef SIGTSTP
+      case SIGTSTP  : return "Stopped";
+#endif /* SIGTSTP */
+#ifdef SIGTTIN
+      case SIGTTIN  : return "Stopped (tty input)";
+#endif /* SIGTTIN */
+#ifdef SIGTTOU
+      case SIGTTOU  : return "Stopped (tty output)";
+#endif /* SIGTTOU */
+#ifdef SIGURG
+      case SIGURG   : return "Urgent I/O condition";
+#endif /* SIGURG */
+#ifdef SIGXCPU
+      case SIGXCPU  : return "CPU time limit exceeded";
+#endif /* SIGXCPU */
+#ifdef SIGXFSZ
+      case SIGXFSZ  : return "File size limit exceeded";
+#endif /* SIGXFSZ */
+#ifdef SIGVTALRM
+      case SIGVTALRM: return "Virtual timer expired";
+#endif /* SIGVTALRM */
+#ifdef SIGPROF
+      case SIGPROF  : return "Profiling timer expired";
+#endif /* SIGPROF */
+#ifdef SIGWINCH
+      case SIGWINCH : return "Window changed";
+#endif /* SIGWINCH */
+#ifdef SIGPOLL
+      case SIGPOLL  : return "I/O possible";
+#endif /* SIGPOLL */
+#ifdef SIGPWR
+      case SIGPWR   : return "Power failure";
+#endif /* SIGPWR */
+#ifdef SIGSYS
+      case SIGSYS   : return "Bad system call";
+#endif /* SIGSYS */
+    }
+
+    static thread_local char sigbuf[SIGBUF_UNKNOWN_LEN] = {0};
+    // Call sigdescr_np() to get signal string
+    snprintf(sigbuf, sizeof(sigbuf), "Unknown signal %d", signum);
+    return sigbuf;
+}
+
+const char* strsignal_(int signum)
+{
+#if HAS_SIGDESCR_NP
+    return strsignal_sigdescr(signum);
+#elif HAS_STRSIGNAL
+    return strsignal_posix(signum);
+#elif HAS_SYS_SIGLIST
+    return strsignal_sys_siglist(signum);
+#else
+    return strsignal_hardcode(signum);
+#endif
+}
