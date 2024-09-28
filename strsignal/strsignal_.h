@@ -43,12 +43,6 @@ const char* strsignal_sigdescr(int signum);
 const char* strsignal_posix(int signum);
 #endif /* HAS_STRSIGNAL */
 #if HAS_SYS_SIGLIST
-// For test purposes, link against sys_siglist, even though it is
-// removed from newer versions of glibc. Assembly trickery to make
-// this work.
-#define SYMVER(s) __asm__(".symver " s)
-SYMVER("sys_siglist,sys_siglist@GLIBC_2.2.5");
-extern const char * const sys_siglist[];
 const char* strsignal_sys_siglist(int signum);
 #endif /* HAS_SYS_SIGLIST */
 const char* strsignal_hardcode(int signum);

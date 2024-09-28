@@ -21,7 +21,7 @@
 
 // Longest EN error message on linux 24 characters.
 #define SIGBUF_LEN 25
-#define SIGBUF_UNKNOWN_LEN 18 /* "Unknown signal 34" */
+#define SIGBUF_UNKNOWN_LEN 19 /* "Unknown signal ###" */
 
 #if HAS_SIGDESCR_NP
 // sigdescr_np Solution.
@@ -62,6 +62,17 @@ TEST_LINKAGE const char* strsignal_posix(int signum)
 #endif
 
 #if HAS_SYS_SIGLIST
+#if defined(TEST_STRSIGNAL) && (__GLIBC__ >= 2 && __GLIBC_MINOR__ >= 32)
+// For test purposes, link against sys_siglist, even though it is
+// removed from newer versions of glibc. Assembly trickery to make
+// this work.
+#define SYMVER(s) __asm__(".symver " s)
+SYMVER("sys_siglist,sys_siglist@GLIBC_2.3.3");
+extern const char * const sys_siglist[];
+// glibc 2.3.3 defined NSIG of 65. Make that correct for testing purposes.
+#undef NSIG
+#define NSIG 65
+#endif /* Legacy glibc sys_siglist for testing purposes. */
 // GLIBC fallback solution. Used as strsignal() is not available
 // at default source, but sys_siglist is.
 TEST_LINKAGE const char* strsignal_sys_siglist(int signum)
@@ -69,7 +80,7 @@ TEST_LINKAGE const char* strsignal_sys_siglist(int signum)
     static thread_local char sigbuf[SIGBUF_UNKNOWN_LEN] = {0};
     // Call sigdescr_np() to get signal string
     const char *buf = NULL;
-    if (signum < NSIG && signum != 64)
+    if (0 <= signum && signum < NSIG)
     {
         buf = sys_siglist[signum];
     }
