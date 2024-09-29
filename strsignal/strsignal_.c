@@ -202,6 +202,8 @@ TEST_LINKAGE const char* strsignal_hardcode(int signum)
     return sigbuf;
 }
 
+#ifndef HAS_STRSIGNAL_MT_SAFE
+// If strsignal is safe, no need to define anything hear.
 const char* strsignal_(int signum)
 {
 #if HAS_SIGDESCR_NP
@@ -214,3 +216,4 @@ const char* strsignal_(int signum)
     return strsignal_hardcode(signum);
 #endif
 }
+#endif /* HAS_STRSIGNAL_MT_SAFE */

@@ -14,14 +14,21 @@
 #define NO_DISCARD /* nothing */
 #endif
 
-NO_DISCARD const char* strsignal_(int signum);
-
 /* strsignal() is defined for _GNU_SOURCE or _POSIX_C_SOURCE (glibc versions?) */
 #if defined(_GNU_SOURCE) || _POSIX_C_SOURCE >= 200809L
 #ifndef HAS_STRSIGNAL
 #define HAS_STRSIGNAL 1
 #endif
 #endif
+
+/* strsignal() is defacto MT Safe since glibc >= 2.32
+ * man 2 strsignal says it isn't safe, but the source code shows it is safe.
+ * Treating as the man page not being up to date. */
+#if HAS_STRSIGNAL && __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 32
+#ifndef HAS_STRSIGNAL_MT_SAFE
+#define HAS_STRSIGNAL_MT_SAFE 1
+#endif
+#endif /* < glibc 2.32 */
 
 /* sigdescr_np() is defined for _GNU_SOURCE */
 #ifdef _GNU_SOURCE
@@ -47,4 +54,12 @@ const char* strsignal_sys_siglist(int signum);
 #endif /* HAS_SYS_SIGLIST */
 const char* strsignal_hardcode(int signum);
 #endif /* TEST_STRSIGNAL */
+
+// If HAS_STRSIGNAL_MT_SAFE, just link to the strsignal function directly.
+#if HAS_STRSIGNAL_MT_SAFE
+#define strsignal_(signum) strsignal(signum)
+#else
+NO_DISCARD const char* strsignal_(int signum);
+#endif /* HAS_STRSIGNAL_MT_SAFE */
+
 #endif /* STRSIGNAL_H */
