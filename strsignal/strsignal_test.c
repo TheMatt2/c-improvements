@@ -1,24 +1,10 @@
 #include "strsignal_.h"
+#include "str_common.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <signal.h>
 #include <stdbool.h>
-
-
-// Max function that only evaluates its values once
-#define MAX(a,b) ({ \
-  __typeof__ (a) _a = (a); \
-  __typeof__ (b) _b = (b); \
-  _a > _b ? _a : _b; \
-})
-
-// Macro to get number of elements in array
-#define ARRAY_SIZE(x)  (sizeof(x) / sizeof((x)[0]))
-
-// Macro to put quotes around a macro
-#define XSTR(x) #x
-#define STR(x) XSTR(x)
 
 // Print GLIBC version
 #pragma message "GLIBC " STR(__GLIBC__) "." STR(__GLIBC_MINOR__)

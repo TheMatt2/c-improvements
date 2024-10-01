@@ -1,0 +1,19 @@
+// Min / Max function that only evaluates its values once
+#define MIN(a, b) ({ \
+  __typeof__ (a) _a = (a); \
+  __typeof__ (b) _b = (b); \
+  _a <= _b ? _a : _b; \
+})
+
+#define MAX(a, b) ({ \
+  __typeof__ (a) _a = (a); \
+  __typeof__ (b) _b = (b); \
+  _a > _b ? _a : _b; \
+})
+
+// Macro to get number of elements in array
+#define ARRAY_SIZE(x)  (sizeof(x) / sizeof((x)[0]))
+
+// Macro to put quotes around a macro
+#define XSTR(x) #x
+#define STR(x) XSTR(x)
