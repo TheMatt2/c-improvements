@@ -7,3 +7,6 @@
 
 # Debug files
 *.dSYM/
+
+# IDE
+.vscode

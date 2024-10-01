@@ -1,16 +1,10 @@
 #include "strsignal_.h"
+#include "str_common.h"
 
 #include <stdio.h> // snprintf
 #include <string.h>
 #include <signal.h>
 
-/* Define thread_local for thread specific buffer */
-#if __STDC_VERSION__ <= 199901L
-#define thread_local __thread
-#elif __STDC_VERSION__ < 202311L
-// C23 changes thread_local to be a keyword
-#define thread_local _Thread_local
-#endif
 
 #ifndef TEST_STRSIGNAL
 // Allow specific functions to be linkable only if test macro is set.
@@ -202,7 +196,7 @@ TEST_LINKAGE const char* strsignal_hardcode(int signum)
     return sigbuf;
 }
 
-#ifndef HAS_STRSIGNAL_MT_SAFE
+#if !HAS_STRSIGNAL_MT_SAFE
 // If strsignal is safe, no need to define anything hear.
 const char* strsignal_(int signum)
 {

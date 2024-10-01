@@ -17,3 +17,11 @@
 // Macro to put quotes around a macro
 #define XSTR(x) #x
 #define STR(x) XSTR(x)
+
+/* Define thread_local for thread specific buffer */
+#if __STDC_VERSION__ <= 199901L
+#define thread_local __thread
+#elif __STDC_VERSION__ < 202311L
+// C23 changes thread_local to be a keyword
+#define thread_local _Thread_local
+#endif

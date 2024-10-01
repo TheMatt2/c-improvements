@@ -42,6 +42,13 @@
 #endif
 #endif /* < glibc 2.32 */
 
+// If HAS_STRSIGNAL_MT_SAFE, just link to the strsignal function directly.
+#if HAS_STRSIGNAL_MT_SAFE
+#define strsignal_(signum) strsignal(signum)
+#else
+NO_DISCARD const char* strsignal_(int signum);
+#endif /* HAS_STRSIGNAL_MT_SAFE */
+
 #ifdef TEST_STRSIGNAL
 #if HAS_SIGDESCR_NP
 const char* strsignal_sigdescr(int signum);
@@ -54,12 +61,5 @@ const char* strsignal_sys_siglist(int signum);
 #endif /* HAS_SYS_SIGLIST */
 const char* strsignal_hardcode(int signum);
 #endif /* TEST_STRSIGNAL */
-
-// If HAS_STRSIGNAL_MT_SAFE, just link to the strsignal function directly.
-#if HAS_STRSIGNAL_MT_SAFE
-#define strsignal_(signum) strsignal(signum)
-#else
-NO_DISCARD const char* strsignal_(int signum);
-#endif /* HAS_STRSIGNAL_MT_SAFE */
 
 #endif /* STRSIGNAL_H */
