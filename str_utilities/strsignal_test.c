@@ -1,24 +1,15 @@
 #include "strsignal_.h"
 #include "str_common.h"
+#include "test_common.h"
 
-#include <stdio.h>
-#include <string.h>
-#include <signal.h>
-#include <stdbool.h>
 
 // Print GLIBC version
 #pragma message "GLIBC " STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
 #pragma message "NSIG" STR(NSIG)
 
 // Output Formatting
-// #define ROWS 35
 #define ROWS 75
 #define COLUMNS 25
-
-struct test_func {
-    char *name;
-    const char* (*func)(int);
-};
 
 struct test_func test_funcs[] = {
 #if HAS_SIGDESCR_NP
@@ -35,65 +26,23 @@ struct test_func test_funcs[] = {
 
 size_t test_funcs_maxlen[ARRAY_SIZE(test_funcs)];
 
-void print_header()
-{
-    printf("###  ");
-    for (size_t i = 0; i < ARRAY_SIZE(test_funcs) - 1; i++)
-    {
-        printf("%-" STR(COLUMNS) "s ", test_funcs[i].name);
-    }
-
-    // Last column
-    printf("%s\n", test_funcs[ARRAY_SIZE(test_funcs) - 1].name);
-}
-
-/*
- * Print column with strsignal info
- */
-void print_column(int signum)
-{
-    printf("%3d: ", signum);
-
-    // printf("SIG%-10s ", sigabbrev_np(signum));
-
-    for (size_t i = 0; i < ARRAY_SIZE(test_funcs); i++)
-    {
-        const char *msg = test_funcs[i].func(signum);
-        if (msg == NULL) msg = "(null)";
-        test_funcs_maxlen[i] = MAX(test_funcs_maxlen[i], strlen(msg));
-
-        if (i != ARRAY_SIZE(test_funcs) - 1)
-        {
-            printf("%-" STR(COLUMNS) "s ", msg);
-        }
-        else
-        {
-            printf("%s\n", msg);
-        }
-    }
-}
-
-void print_maxlen()
-{
-    printf("MAX  ");
-    for (size_t i = 0; i < ARRAY_SIZE(test_funcs) - 1; i++)
-    {
-        printf("%-" STR(COLUMNS) "zu ", test_funcs_maxlen[i]);
-    }
-
-    // Last column
-    printf("%zu\n", test_funcs_maxlen[ARRAY_SIZE(test_funcs_maxlen) - 1]);
-}
+struct test_table test_table = {
+    .test_funcs = test_funcs,
+    .test_funcs_maxlen = test_funcs_maxlen,
+    .size = ARRAY_SIZE(test_funcs),
+    .rows = ROWS,
+    .columns = COLUMNS
+};
 
 int main()
 {
-    print_header();
+    print_header(&test_table);
 
     for (size_t i = 0; i < ROWS; i++)
     {
-        print_column(i);
+        print_column(i, &test_table);
     }
 
-    print_maxlen();
+    print_maxlen(&test_table);
     return 0;
 }
