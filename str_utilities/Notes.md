@@ -17,7 +17,7 @@
 | `char* strerror_l()`     | >= glibc 2.6                           | POSIX.1-2008                                                      |
 | `strerrordesc_np()`      | >= glibc 2.32                          | Non-POSIX. GNU specific.                                          |
 | `sys_errlist[]`          | < glibc 2.32. Deprecated >= glibc 2.19 | Non-POSIX. GNU specific.                                          |
-| `printf("%m")`           | glibc 1.06                             | None?                                                             |
+| `printf("%m")`           | >= glibc 1.06                          | None                                                              |
 | `strerror_s()`           | None!                                  | C11 with `__STDC_WANT_LIB_EXT1__` and if extension is supported.  |
 
 If Non-GNU, POSIX.1 2001 only... put a lock around strerror?
@@ -66,6 +66,16 @@ Preferability of Solutions
 
 ## strerrorname
 
+| C Library Function  | glibc Support | Requirements                                    |
+| ------------------- | ------------- | ----------------------------------------------- |
+| `strerrorname_np()` | >= glibc 2.32 | Non-POSIX. GNU specific. Requires `_GNU_SOURCE` |
+| `printf("%#m")`     | >= glibc 2.35 | None                                            |
+
+Preferability of Solutions
 1. `strerrorname_np()`
-2. `printf("%M")`
+2. `printf("%#m")`
 3. hardcode
+
+### References
+
+> man 3 `printf`: glibc 2.35 gives a meaning to the alternate form (#) of the m conversion specifier, that is %#m.

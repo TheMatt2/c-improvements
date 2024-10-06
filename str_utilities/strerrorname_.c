@@ -18,7 +18,7 @@
 #define ERRBUF_UNKNOWN_LEN 4
 
 #if HAS_STRERRORNAME_NP
-// Use strerror_s() to print error message.
+// Use strerrorname_np() to get error name.
 TEST_LINKAGE const char* strerrorname_gnu_np(int errnum)
 {
     // Thread local buffer for errors.
