@@ -66,7 +66,7 @@ extern const char * const sys_siglist[];
 #undef NSIG
 #define NSIG 65
 #endif /* Legacy glibc sys_siglist for testing purposes. */
-// GLIBC fallback solution. Used as strsignal() is not available
+// GLIBC fallback solution. Used if strsignal() is not available
 // at default source, but sys_siglist is.
 TEST_LINKAGE const char* strsignal_sys_siglist(int signum)
 {

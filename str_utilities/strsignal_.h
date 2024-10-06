@@ -31,7 +31,7 @@
 #endif /* < glibc 2.32 */
 
 /* sigdescr_np() is defined for _GNU_SOURCE */
-#ifdef _GNU_SOURCE
+#if defined(_GNU_SOURCE) && __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 32
 #define HAS_SIGDESCR_NP 1
 #endif /* _GNU_SOURCE */
 

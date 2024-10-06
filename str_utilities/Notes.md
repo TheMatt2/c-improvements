@@ -55,6 +55,15 @@ Preferability of Solutions
 | `sigdescr_np`                       | >= glibc 2.32                | Requires `_GNU_SOURCE`                                                                                                                      |
 | `sys_siglist` / `NSIG`              | >= glibc 1.09. < glibc 2.32  | glibc specific                                                                                                                              |
 
+If `sigdescr_np()` is availiable, `strsignal()` defacto MT-Safe is also available.
+So no reason to use `sigdescr_np()`.
+
+Preferability of Solutions
+
+1. `strsignal()` MT-Safe if avaliable.
+2. `sys_siglist` / `NSIG`
+3. `strsignal()` MT-Unsafe
+
 ### References
 
  - https://elixir.bootlin.com/glibc/glibc-2.40/source/NEWS
