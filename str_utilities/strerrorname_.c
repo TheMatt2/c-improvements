@@ -64,406 +64,454 @@ TEST_LINKAGE const char* strerrorname_hardcode(int errnum)
     // errors. However, these are defined by ISO C as macros, so they
     // can be tested for. Some errno macros may have the same value.
 #ifdef E2BIG
-    if (errnum == E2BIG)           return "E2BIG";
+    if (errnum == E2BIG)            return "E2BIG";
 #endif /* E2BIG */
 #ifdef EACCES
-    if (errnum == EACCES)          return "EACCES";
+    if (errnum == EACCES)           return "EACCES";
 #endif /* EACCES */
 #ifdef EADDRINUSE
-    if (errnum == EADDRINUSE)      return "EADDRINUSE";
+    if (errnum == EADDRINUSE)       return "EADDRINUSE";
 #endif /* EADDRINUSE */
 #ifdef EADDRNOTAVAIL
-    if (errnum == EADDRNOTAVAIL)   return "EADDRNOTAVAIL";
+    if (errnum == EADDRNOTAVAIL)    return "EADDRNOTAVAIL";
 #endif /* EADDRNOTAVAIL */
 #ifdef EADV
-    if (errnum == EADV)            return "EADV";
+    if (errnum == EADV)             return "EADV";
 #endif /* EADV */
 #ifdef EAFNOSUPPORT
-    if (errnum == EAFNOSUPPORT)    return "EAFNOSUPPORT";
+    if (errnum == EAFNOSUPPORT)     return "EAFNOSUPPORT";
 #endif /* EAFNOSUPPORT */
 #ifdef EAGAIN
-    if (errnum == EAGAIN)          return "EAGAIN";
+    if (errnum == EAGAIN)           return "EAGAIN";
 #endif /* EAGAIN */
 #ifdef EALREADY
-    if (errnum == EALREADY)        return "EALREADY";
+    if (errnum == EALREADY)         return "EALREADY";
 #endif /* EALREADY */
+#ifdef EAUTH
+    if (errnum == EAUTH)            return "EAUTH";
+#endif /* EAUTH */
+#ifdef EBADARCH
+    if (errnum == EBADARCH)         return "EBADARCH";
+#endif /* EBADARCH */
 #ifdef EBADE
-    if (errnum == EBADE)           return "EBADE";
+    if (errnum == EBADE)            return "EBADE";
 #endif /* EBADE */
+#ifdef EBADEXEC
+    if (errnum == EBADEXEC)         return "EBADEXEC";
+#endif /* EBADEXEC */
 #ifdef EBADF
-    if (errnum == EBADF)           return "EBADF";
+    if (errnum == EBADF)            return "EBADF";
 #endif /* EBADF */
 #ifdef EBADFD
-    if (errnum == EBADFD)          return "EBADFD";
+    if (errnum == EBADFD)           return "EBADFD";
 #endif /* EBADFD */
+#ifdef EBADMACHO
+    if (errnum == EBADMACHO)        return "EBADMACHO";
+#endif /* EBADMACHO */
 #ifdef EBADMSG
-    if (errnum == EBADMSG)         return "EBADMSG";
+    if (errnum == EBADMSG)          return "EBADMSG";
 #endif /* EBADMSG */
 #ifdef EBADR
-    if (errnum == EBADR)           return "EBADR";
+    if (errnum == EBADR)            return "EBADR";
 #endif /* EBADR */
+#ifdef EBADRPC
+    if (errnum == EBADRPC)          return "EBADRPC";
+#endif /* EBADRPC */
 #ifdef EBADRQC
-    if (errnum == EBADRQC)         return "EBADRQC";
+    if (errnum == EBADRQC)          return "EBADRQC";
 #endif /* EBADRQC */
 #ifdef EBADSLT
-    if (errnum == EBADSLT)         return "EBADSLT";
+    if (errnum == EBADSLT)          return "EBADSLT";
 #endif /* EBADSLT */
 #ifdef EBFONT
-    if (errnum == EBFONT)          return "EBFONT";
+    if (errnum == EBFONT)           return "EBFONT";
 #endif /* EBFONT */
 #ifdef EBUSY
-    if (errnum == EBUSY)           return "EBUSY";
+    if (errnum == EBUSY)            return "EBUSY";
 #endif /* EBUSY */
 #ifdef ECANCELED
-    if (errnum == ECANCELED)       return "ECANCELED";
+    if (errnum == ECANCELED)        return "ECANCELED";
 #endif /* ECANCELED */
 #ifdef ECHILD
-    if (errnum == ECHILD)          return "ECHILD";
+    if (errnum == ECHILD)           return "ECHILD";
 #endif /* ECHILD */
 #ifdef ECHRNG
-    if (errnum == ECHRNG)          return "ECHRNG";
+    if (errnum == ECHRNG)           return "ECHRNG";
 #endif /* ECHRNG */
 #ifdef ECOMM
-    if (errnum == ECOMM)           return "ECOMM";
+    if (errnum == ECOMM)            return "ECOMM";
 #endif /* ECOMM */
 #ifdef ECONNABORTED
-    if (errnum == ECONNABORTED)    return "ECONNABORTED";
+    if (errnum == ECONNABORTED)     return "ECONNABORTED";
 #endif /* ECONNABORTED */
 #ifdef ECONNREFUSED
-    if (errnum == ECONNREFUSED)    return "ECONNREFUSED";
+    if (errnum == ECONNREFUSED)     return "ECONNREFUSED";
 #endif /* ECONNREFUSED */
 #ifdef ECONNRESET
-    if (errnum == ECONNRESET)      return "ECONNRESET";
+    if (errnum == ECONNRESET)       return "ECONNRESET";
 #endif /* ECONNRESET */
 #ifdef EDEADLK
-    if (errnum == EDEADLK)         return "EDEADLK";
+    if (errnum == EDEADLK)          return "EDEADLK";
 #endif /* EDEADLK */
 #ifdef EDEADLOCK
-    if (errnum == EDEADLOCK)       return "EDEADLOCK";
+    if (errnum == EDEADLOCK)        return "EDEADLOCK";
 #endif /* EDEADLOCK */
 #ifdef EDESTADDRREQ
-    if (errnum == EDESTADDRREQ)    return "EDESTADDRREQ";
+    if (errnum == EDESTADDRREQ)     return "EDESTADDRREQ";
 #endif /* EDESTADDRREQ */
+#ifdef EDEVERR
+    if (errnum == EDEVERR)          return "EDEVERR";
+#endif /* EDEVERR */
 #ifdef EDOM
-    if (errnum == EDOM)            return "EDOM";
+    if (errnum == EDOM)             return "EDOM";
 #endif /* EDOM */
 #ifdef EDOTDOT
-    if (errnum == EDOTDOT)         return "EDOTDOT";
+    if (errnum == EDOTDOT)          return "EDOTDOT";
 #endif /* EDOTDOT */
 #ifdef EDQUOT
-    if (errnum == EDQUOT)          return "EDQUOT";
+    if (errnum == EDQUOT)           return "EDQUOT";
 #endif /* EDQUOT */
 #ifdef EEXIST
-    if (errnum == EEXIST)          return "EEXIST";
+    if (errnum == EEXIST)           return "EEXIST";
 #endif /* EEXIST */
 #ifdef EFAULT
-    if (errnum == EFAULT)          return "EFAULT";
+    if (errnum == EFAULT)           return "EFAULT";
 #endif /* EFAULT */
 #ifdef EFBIG
-    if (errnum == EFBIG)           return "EFBIG";
+    if (errnum == EFBIG)            return "EFBIG";
 #endif /* EFBIG */
+#ifdef EFTYPE
+    if (errnum == EFTYPE)           return "EFTYPE";
+#endif /* EFTYPE */
 #ifdef EHOSTDOWN
-    if (errnum == EHOSTDOWN)       return "EHOSTDOWN";
+    if (errnum == EHOSTDOWN)        return "EHOSTDOWN";
 #endif /* EHOSTDOWN */
 #ifdef EHOSTUNREACH
-    if (errnum == EHOSTUNREACH)    return "EHOSTUNREACH";
+    if (errnum == EHOSTUNREACH)     return "EHOSTUNREACH";
 #endif /* EHOSTUNREACH */
 #ifdef EHWPOISON
-    if (errnum == EHWPOISON)       return "EHWPOISON";
+    if (errnum == EHWPOISON)        return "EHWPOISON";
 #endif /* EHWPOISON */
 #ifdef EIDRM
-    if (errnum == EIDRM)           return "EIDRM";
+    if (errnum == EIDRM)            return "EIDRM";
 #endif /* EIDRM */
 #ifdef EILSEQ
-    if (errnum == EILSEQ)          return "EILSEQ";
+    if (errnum == EILSEQ)           return "EILSEQ";
 #endif /* EILSEQ */
 #ifdef EINPROGRESS
-    if (errnum == EINPROGRESS)     return "EINPROGRESS";
+    if (errnum == EINPROGRESS)      return "EINPROGRESS";
 #endif /* EINPROGRESS */
 #ifdef EINTR
-    if (errnum == EINTR)           return "EINTR";
+    if (errnum == EINTR)            return "EINTR";
 #endif /* EINTR */
 #ifdef EINVAL
-    if (errnum == EINVAL)          return "EINVAL";
+    if (errnum == EINVAL)           return "EINVAL";
 #endif /* EINVAL */
 #ifdef EIO
-    if (errnum == EIO)             return "EIO";
+    if (errnum == EIO)              return "EIO";
 #endif /* EIO */
 #ifdef EISCONN
-    if (errnum == EISCONN)         return "EISCONN";
+    if (errnum == EISCONN)          return "EISCONN";
 #endif /* EISCONN */
 #ifdef EISDIR
-    if (errnum == EISDIR)          return "EISDIR";
+    if (errnum == EISDIR)           return "EISDIR";
 #endif /* EISDIR */
 #ifdef EISNAM
-    if (errnum == EISNAM)          return "EISNAM";
+    if (errnum == EISNAM)           return "EISNAM";
 #endif /* EISNAM */
 #ifdef EKEYEXPIRED
-    if (errnum == EKEYEXPIRED)     return "EKEYEXPIRED";
+    if (errnum == EKEYEXPIRED)      return "EKEYEXPIRED";
 #endif /* EKEYEXPIRED */
 #ifdef EKEYREJECTED
-    if (errnum == EKEYREJECTED)    return "EKEYREJECTED";
+    if (errnum == EKEYREJECTED)     return "EKEYREJECTED";
 #endif /* EKEYREJECTED */
 #ifdef EKEYREVOKED
-    if (errnum == EKEYREVOKED)     return "EKEYREVOKED";
+    if (errnum == EKEYREVOKED)      return "EKEYREVOKED";
 #endif /* EKEYREVOKED */
 #ifdef EL2HLT
-    if (errnum == EL2HLT)          return "EL2HLT";
+    if (errnum == EL2HLT)           return "EL2HLT";
 #endif /* EL2HLT */
 #ifdef EL2NSYNC
-    if (errnum == EL2NSYNC)        return "EL2NSYNC";
+    if (errnum == EL2NSYNC)         return "EL2NSYNC";
 #endif /* EL2NSYNC */
 #ifdef EL3HLT
-    if (errnum == EL3HLT)          return "EL3HLT";
+    if (errnum == EL3HLT)           return "EL3HLT";
 #endif /* EL3HLT */
 #ifdef EL3RST
-    if (errnum == EL3RST)          return "EL3RST";
+    if (errnum == EL3RST)           return "EL3RST";
 #endif /* EL3RST */
 #ifdef ELIBACC
-    if (errnum == ELIBACC)         return "ELIBACC";
+    if (errnum == ELIBACC)          return "ELIBACC";
 #endif /* ELIBACC */
 #ifdef ELIBBAD
-    if (errnum == ELIBBAD)         return "ELIBBAD";
+    if (errnum == ELIBBAD)          return "ELIBBAD";
 #endif /* ELIBBAD */
 #ifdef ELIBEXEC
-    if (errnum == ELIBEXEC)        return "ELIBEXEC";
+    if (errnum == ELIBEXEC)         return "ELIBEXEC";
 #endif /* ELIBEXEC */
 #ifdef ELIBMAX
-    if (errnum == ELIBMAX)         return "ELIBMAX";
+    if (errnum == ELIBMAX)          return "ELIBMAX";
 #endif /* ELIBMAX */
 #ifdef ELIBSCN
-    if (errnum == ELIBSCN)         return "ELIBSCN";
+    if (errnum == ELIBSCN)          return "ELIBSCN";
 #endif /* ELIBSCN */
 #ifdef ELNRNG
-    if (errnum == ELNRNG)          return "ELNRNG";
+    if (errnum == ELNRNG)           return "ELNRNG";
 #endif /* ELNRNG */
 #ifdef ELOOP
-    if (errnum == ELOOP)           return "ELOOP";
+    if (errnum == ELOOP)            return "ELOOP";
 #endif /* ELOOP */
 #ifdef EMEDIUMTYPE
-    if (errnum == EMEDIUMTYPE)     return "EMEDIUMTYPE";
+    if (errnum == EMEDIUMTYPE)      return "EMEDIUMTYPE";
 #endif /* EMEDIUMTYPE */
 #ifdef EMFILE
-    if (errnum == EMFILE)          return "EMFILE";
+    if (errnum == EMFILE)           return "EMFILE";
 #endif /* EMFILE */
 #ifdef EMLINK
-    if (errnum == EMLINK)          return "EMLINK";
+    if (errnum == EMLINK)           return "EMLINK";
 #endif /* EMLINK */
 #ifdef EMSGSIZE
-    if (errnum == EMSGSIZE)        return "EMSGSIZE";
+    if (errnum == EMSGSIZE)         return "EMSGSIZE";
 #endif /* EMSGSIZE */
 #ifdef EMULTIHOP
-    if (errnum == EMULTIHOP)       return "EMULTIHOP";
+    if (errnum == EMULTIHOP)        return "EMULTIHOP";
 #endif /* EMULTIHOP */
 #ifdef ENAMETOOLONG
-    if (errnum == ENAMETOOLONG)    return "ENAMETOOLONG";
+    if (errnum == ENAMETOOLONG)     return "ENAMETOOLONG";
 #endif /* ENAMETOOLONG */
 #ifdef ENAVAIL
-    if (errnum == ENAVAIL)         return "ENAVAIL";
+    if (errnum == ENAVAIL)          return "ENAVAIL";
 #endif /* ENAVAIL */
+#ifdef ENEEDAUTH
+    if (errnum == ENEEDAUTH)        return "ENEEDAUTH";
+#endif /* ENEEDAUTH */
 #ifdef ENETDOWN
-    if (errnum == ENETDOWN)        return "ENETDOWN";
+    if (errnum == ENETDOWN)         return "ENETDOWN";
 #endif /* ENETDOWN */
 #ifdef ENETRESET
-    if (errnum == ENETRESET)       return "ENETRESET";
+    if (errnum == ENETRESET)        return "ENETRESET";
 #endif /* ENETRESET */
 #ifdef ENETUNREACH
-    if (errnum == ENETUNREACH)     return "ENETUNREACH";
+    if (errnum == ENETUNREACH)      return "ENETUNREACH";
 #endif /* ENETUNREACH */
 #ifdef ENFILE
-    if (errnum == ENFILE)          return "ENFILE";
+    if (errnum == ENFILE)           return "ENFILE";
 #endif /* ENFILE */
 #ifdef ENOANO
-    if (errnum == ENOANO)          return "ENOANO";
+    if (errnum == ENOANO)           return "ENOANO";
 #endif /* ENOANO */
+#ifdef ENOATTR
+    if (errnum == ENOATTR)          return "ENOATTR";
+#endif /* ENOATTR */
 #ifdef ENOBUFS
-    if (errnum == ENOBUFS)         return "ENOBUFS";
+    if (errnum == ENOBUFS)          return "ENOBUFS";
 #endif /* ENOBUFS */
 #ifdef ENOCSI
-    if (errnum == ENOCSI)          return "ENOCSI";
+    if (errnum == ENOCSI)           return "ENOCSI";
 #endif /* ENOCSI */
 #ifdef ENODATA
-    if (errnum == ENODATA)         return "ENODATA";
+    if (errnum == ENODATA)          return "ENODATA";
 #endif /* ENODATA */
 #ifdef ENODEV
-    if (errnum == ENODEV)          return "ENODEV";
+    if (errnum == ENODEV)           return "ENODEV";
 #endif /* ENODEV */
 #ifdef ENOENT
-    if (errnum == ENOENT)          return "ENOENT";
+    if (errnum == ENOENT)           return "ENOENT";
 #endif /* ENOENT */
 #ifdef ENOEXEC
-    if (errnum == ENOEXEC)         return "ENOEXEC";
+    if (errnum == ENOEXEC)          return "ENOEXEC";
 #endif /* ENOEXEC */
 #ifdef ENOKEY
-    if (errnum == ENOKEY)          return "ENOKEY";
+    if (errnum == ENOKEY)           return "ENOKEY";
 #endif /* ENOKEY */
 #ifdef ENOLCK
-    if (errnum == ENOLCK)          return "ENOLCK";
+    if (errnum == ENOLCK)           return "ENOLCK";
 #endif /* ENOLCK */
 #ifdef ENOLINK
-    if (errnum == ENOLINK)         return "ENOLINK";
+    if (errnum == ENOLINK)          return "ENOLINK";
 #endif /* ENOLINK */
 #ifdef ENOMEDIUM
-    if (errnum == ENOMEDIUM)       return "ENOMEDIUM";
+    if (errnum == ENOMEDIUM)        return "ENOMEDIUM";
 #endif /* ENOMEDIUM */
 #ifdef ENOMEM
-    if (errnum == ENOMEM)          return "ENOMEM";
+    if (errnum == ENOMEM)           return "ENOMEM";
 #endif /* ENOMEM */
 #ifdef ENOMSG
-    if (errnum == ENOMSG)          return "ENOMSG";
+    if (errnum == ENOMSG)           return "ENOMSG";
 #endif /* ENOMSG */
 #ifdef ENONET
-    if (errnum == ENONET)          return "ENONET";
+    if (errnum == ENONET)           return "ENONET";
 #endif /* ENONET */
 #ifdef ENOPKG
-    if (errnum == ENOPKG)          return "ENOPKG";
+    if (errnum == ENOPKG)           return "ENOPKG";
 #endif /* ENOPKG */
 #ifdef ENOPROTOOPT
-    if (errnum == ENOPROTOOPT)     return "ENOPROTOOPT";
+    if (errnum == ENOPROTOOPT)      return "ENOPROTOOPT";
 #endif /* ENOPROTOOPT */
 #ifdef ENOSPC
-    if (errnum == ENOSPC)          return "ENOSPC";
+    if (errnum == ENOSPC)           return "ENOSPC";
 #endif /* ENOSPC */
 #ifdef ENOSR
-    if (errnum == ENOSR)           return "ENOSR";
+    if (errnum == ENOSR)            return "ENOSR";
 #endif /* ENOSR */
 #ifdef ENOSTR
-    if (errnum == ENOSTR)          return "ENOSTR";
+    if (errnum == ENOSTR)           return "ENOSTR";
 #endif /* ENOSTR */
 #ifdef ENOSYS
-    if (errnum == ENOSYS)          return "ENOSYS";
+    if (errnum == ENOSYS)           return "ENOSYS";
 #endif /* ENOSYS */
 #ifdef ENOTBLK
-    if (errnum == ENOTBLK)         return "ENOTBLK";
+    if (errnum == ENOTBLK)          return "ENOTBLK";
 #endif /* ENOTBLK */
 #ifdef ENOTCONN
-    if (errnum == ENOTCONN)        return "ENOTCONN";
+    if (errnum == ENOTCONN)         return "ENOTCONN";
 #endif /* ENOTCONN */
 #ifdef ENOTDIR
-    if (errnum == ENOTDIR)         return "ENOTDIR";
+    if (errnum == ENOTDIR)          return "ENOTDIR";
 #endif /* ENOTDIR */
 #ifdef ENOTEMPTY
-    if (errnum == ENOTEMPTY)       return "ENOTEMPTY";
+    if (errnum == ENOTEMPTY)        return "ENOTEMPTY";
 #endif /* ENOTEMPTY */
 #ifdef ENOTNAM
-    if (errnum == ENOTNAM)         return "ENOTNAM";
+    if (errnum == ENOTNAM)          return "ENOTNAM";
 #endif /* ENOTNAM */
 #ifdef ENOTRECOVERABLE
-    if (errnum == ENOTRECOVERABLE) return "ENOTRECOVERABLE";
+    if (errnum == ENOTRECOVERABLE)  return "ENOTRECOVERABLE";
 #endif /* ENOTRECOVERABLE */
 #ifdef ENOTSOCK
-    if (errnum == ENOTSOCK)        return "ENOTSOCK";
+    if (errnum == ENOTSOCK)         return "ENOTSOCK";
 #endif /* ENOTSOCK */
 #ifdef ENOTSUP
-    if (errnum == ENOTSUP)         return "ENOTSUP";
+    if (errnum == ENOTSUP)          return "ENOTSUP";
 #endif /* ENOTSUP */
 #ifdef ENOTTY
-    if (errnum == ENOTTY)          return "ENOTTY";
+    if (errnum == ENOTTY)           return "ENOTTY";
 #endif /* ENOTTY */
 #ifdef ENOTUNIQ
-    if (errnum == ENOTUNIQ)        return "ENOTUNIQ";
+    if (errnum == ENOTUNIQ)         return "ENOTUNIQ";
 #endif /* ENOTUNIQ */
 #ifdef ENXIO
-    if (errnum == ENXIO)           return "ENXIO";
+    if (errnum == ENXIO)            return "ENXIO";
 #endif /* ENXIO */
 #ifdef EOPNOTSUPP
-    if (errnum == EOPNOTSUPP)      return "EOPNOTSUPP";
+    if (errnum == EOPNOTSUPP)       return "EOPNOTSUPP";
 #endif /* EOPNOTSUPP */
 #ifdef EOVERFLOW
-    if (errnum == EOVERFLOW)       return "EOVERFLOW";
+    if (errnum == EOVERFLOW)        return "EOVERFLOW";
 #endif /* EOVERFLOW */
 #ifdef EOWNERDEAD
-    if (errnum == EOWNERDEAD)      return "EOWNERDEAD";
+    if (errnum == EOWNERDEAD)       return "EOWNERDEAD";
 #endif /* EOWNERDEAD */
 #ifdef EPERM
-    if (errnum == EPERM)           return "EPERM";
+    if (errnum == EPERM)            return "EPERM";
 #endif /* EPERM */
 #ifdef EPFNOSUPPORT
-    if (errnum == EPFNOSUPPORT)    return "EPFNOSUPPORT";
+    if (errnum == EPFNOSUPPORT)     return "EPFNOSUPPORT";
 #endif /* EPFNOSUPPORT */
 #ifdef EPIPE
-    if (errnum == EPIPE)           return "EPIPE";
+    if (errnum == EPIPE)            return "EPIPE";
 #endif /* EPIPE */
+#ifdef EPROCLIM
+    if (errnum == EPROCLIM)         return "EPROCLIM";
+#endif /* EPROCLIM */
+#ifdef EPROCUNAVAIL
+    if (errnum == EPROCUNAVAIL)     return "EPROCUNAVAIL";
+#endif /* EPROCUNAVAIL */
+#ifdef EPROGMISMATCH
+    if (errnum == EPROGMISMATCH)    return "EPROGMISMATCH";
+#endif /* EPROGMISMATCH */
+#ifdef EPROGUNAVAIL
+    if (errnum == EPROGUNAVAIL)     return "EPROGUNAVAIL";
+#endif /* EPROGUNAVAIL */
 #ifdef EPROTO
-    if (errnum == EPROTO)          return "EPROTO";
+    if (errnum == EPROTO)           return "EPROTO";
 #endif /* EPROTO */
 #ifdef EPROTONOSUPPORT
-    if (errnum == EPROTONOSUPPORT) return "EPROTONOSUPPORT";
+    if (errnum == EPROTONOSUPPORT)  return "EPROTONOSUPPORT";
 #endif /* EPROTONOSUPPORT */
 #ifdef EPROTOTYPE
-    if (errnum == EPROTOTYPE)      return "EPROTOTYPE";
+    if (errnum == EPROTOTYPE)       return "EPROTOTYPE";
 #endif /* EPROTOTYPE */
+#ifdef EPWROFF
+    if (errnum == EPWROFF)          return "EPWROFF";
+#endif /* EPWROFF */
 #ifdef ERANGE
-    if (errnum == ERANGE)          return "ERANGE";
+    if (errnum == ERANGE)           return "ERANGE";
 #endif /* ERANGE */
 #ifdef EREMCHG
-    if (errnum == EREMCHG)         return "EREMCHG";
+    if (errnum == EREMCHG)          return "EREMCHG";
 #endif /* EREMCHG */
 #ifdef EREMOTE
-    if (errnum == EREMOTE)         return "EREMOTE";
+    if (errnum == EREMOTE)          return "EREMOTE";
 #endif /* EREMOTE */
 #ifdef EREMOTEIO
-    if (errnum == EREMOTEIO)       return "EREMOTEIO";
+    if (errnum == EREMOTEIO)        return "EREMOTEIO";
 #endif /* EREMOTEIO */
 #ifdef ERESTART
-    if (errnum == ERESTART)        return "ERESTART";
+    if (errnum == ERESTART)         return "ERESTART";
 #endif /* ERESTART */
 #ifdef ERFKILL
-    if (errnum == ERFKILL)         return "ERFKILL";
+    if (errnum == ERFKILL)          return "ERFKILL";
 #endif /* ERFKILL */
 #ifdef EROFS
-    if (errnum == EROFS)           return "EROFS";
+    if (errnum == EROFS)            return "EROFS";
 #endif /* EROFS */
+#ifdef ERPCMISMATCH
+    if (errnum == ERPCMISMATCH)     return "ERPCMISMATCH";
+#endif /* ERPCMISMATCH */
+#ifdef ESHLIBVERS
+    if (errnum == ESHLIBVERS)       return "ESHLIBVERS";
+#endif /* ESHLIBVERS */
 #ifdef ESHUTDOWN
-    if (errnum == ESHUTDOWN)       return "ESHUTDOWN";
+    if (errnum == ESHUTDOWN)        return "ESHUTDOWN";
 #endif /* ESHUTDOWN */
 #ifdef ESOCKTNOSUPPORT
-    if (errnum == ESOCKTNOSUPPORT) return "ESOCKTNOSUPPORT";
+    if (errnum == ESOCKTNOSUPPORT)  return "ESOCKTNOSUPPORT";
 #endif /* ESOCKTNOSUPPORT */
 #ifdef ESPIPE
-    if (errnum == ESPIPE)          return "ESPIPE";
+    if (errnum == ESPIPE)           return "ESPIPE";
 #endif /* ESPIPE */
 #ifdef ESRCH
-    if (errnum == ESRCH)           return "ESRCH";
+    if (errnum == ESRCH)            return "ESRCH";
 #endif /* ESRCH */
 #ifdef ESRMNT
-    if (errnum == ESRMNT)          return "ESRMNT";
+    if (errnum == ESRMNT)           return "ESRMNT";
 #endif /* ESRMNT */
 #ifdef ESTALE
-    if (errnum == ESTALE)          return "ESTALE";
+    if (errnum == ESTALE)           return "ESTALE";
 #endif /* ESTALE */
 #ifdef ESTRPIPE
-    if (errnum == ESTRPIPE)        return "ESTRPIPE";
+    if (errnum == ESTRPIPE)         return "ESTRPIPE";
 #endif /* ESTRPIPE */
 #ifdef ETIME
-    if (errnum == ETIME)           return "ETIME";
+    if (errnum == ETIME)            return "ETIME";
 #endif /* ETIME */
 #ifdef ETIMEDOUT
-    if (errnum == ETIMEDOUT)       return "ETIMEDOUT";
+    if (errnum == ETIMEDOUT)        return "ETIMEDOUT";
 #endif /* ETIMEDOUT */
 #ifdef ETOOMANYREFS
-    if (errnum == ETOOMANYREFS)    return "ETOOMANYREFS";
+    if (errnum == ETOOMANYREFS)     return "ETOOMANYREFS";
 #endif /* ETOOMANYREFS */
 #ifdef ETXTBSY
-    if (errnum == ETXTBSY)         return "ETXTBSY";
+    if (errnum == ETXTBSY)          return "ETXTBSY";
 #endif /* ETXTBSY */
 #ifdef EUCLEAN
-    if (errnum == EUCLEAN)         return "EUCLEAN";
+    if (errnum == EUCLEAN)          return "EUCLEAN";
 #endif /* EUCLEAN */
 #ifdef EUNATCH
-    if (errnum == EUNATCH)         return "EUNATCH";
+    if (errnum == EUNATCH)          return "EUNATCH";
 #endif /* EUNATCH */
 #ifdef EUSERS
-    if (errnum == EUSERS)          return "EUSERS";
+    if (errnum == EUSERS)           return "EUSERS";
 #endif /* EUSERS */
 #ifdef EWOULDBLOCK
-    if (errnum == EWOULDBLOCK)     return "EWOULDBLOCK";
+    if (errnum == EWOULDBLOCK)      return "EWOULDBLOCK";
 #endif /* EWOULDBLOCK */
 #ifdef EXDEV
-    if (errnum == EXDEV)           return "EXDEV";
+    if (errnum == EXDEV)            return "EXDEV";
 #endif /* EXDEV */
 #ifdef EXFULL
-    if (errnum == EXFULL)          return "EXFULL";
+    if (errnum == EXFULL)           return "EXFULL";
 #endif /* EXFULL */
 
     // Thread local buffer for errors.
