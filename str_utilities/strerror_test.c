@@ -5,7 +5,6 @@
 
 // Print GLIBC version
 #pragma message "GLIBC " STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
-#pragma message "NSIG" STR(NSIG)
 #pragma message "__STDC_WANT_LIB_EXT1__" STR(__STDC_WANT_LIB_EXT1__)
 
 // Output Formatting
@@ -13,7 +12,6 @@
 #define COLUMNS 50
 
 struct test_func test_funcs[] = {
-    {"strerror", (void *) strerror},
 #if HAS_STRERROR_S
     {"strerror_s_safe", strerror_s_safe},
 #elif HAS_PRINTF_M

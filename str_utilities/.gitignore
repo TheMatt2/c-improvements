@@ -1,3 +1,4 @@
 strsignal_test
 strsignal_race_test
 strerror_test
+strerrorname_test

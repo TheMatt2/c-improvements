@@ -3,7 +3,7 @@ CFLAGS += -std=c11 -Wall
 CFLAGS += -D_GNU_SOURCE -DTEST_STRSIGNAL -DHAS_SYS_SIGLIST
 CFLAGS += -g -fsanitize=address -pthread
 
-TEST_TARGETS = strsignal_test strsignal_race_test strerror_test
+TEST_TARGETS = strsignal_test strsignal_race_test strerror_test strerrorname_test
 
 # Disable implicit rules
 
@@ -11,7 +11,7 @@ TEST_TARGETS = strsignal_test strsignal_race_test strerror_test
 .PHONY:
 all: $(TEST_TARGETS)
 
-$(TEST_TARGETS): % : strsignal_.o strerror_.o test_common.o %.o
+$(TEST_TARGETS): % : strsignal_.o strerror_.o strerrorname_.o test_common.o %.o
 	$(CC) $(CFLAGS) $^ -o $@
 
 %.o : %.c

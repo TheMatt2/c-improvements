@@ -2,7 +2,6 @@
 // strerror_.h
 #ifndef STRERROR_H
 #define STRERROR_H
-#include <string.h>
 
 /**
  * @brief Portable thread safe strerror()

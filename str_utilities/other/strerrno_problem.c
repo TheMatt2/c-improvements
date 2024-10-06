@@ -37,7 +37,7 @@
 void strerror_r_improved(int err, char *str, size_t str_len)
 {
 #ifdef HAS_SYS_ERRLIST
-    if (err < sys_nerr)
+    if (0 <= err && err < sys_nerr)
         snprintf(str, str_len, "%s", sys_errlist[err]);
     else
         snprintf(str, str_len, "Unknown error: %d", err);
