@@ -7,7 +7,7 @@
 5. Ideally don't need to hardcode all possible value.
 6. Ideally don't need explicit buffer.
 
-### strstring
+### strerror
 
 | C Library Function       | glibc Support                          | Requirements                                                      |
 | ------------------------ | -------------------------------------- | ----------------------------------------------------------------- |
@@ -23,10 +23,10 @@
 If Non-GNU, POSIX.1 2001 only... put a lock around strerror?
 
 Preferability of Solutions
-1. If glibc >= 2.32. Directly use strerror()
+1. If glibc >= 2.32. Directly use `strerror()`
 2. If `__STDC_LIB_EXT1__` is defined, use `strerror_s()`
 3. If glibc < 2.32. `printf("%m")`
-4. `pthread_mutex_lock()` around strerror()
+4. `pthread_mutex_lock()` around `strerror()`
 
 ### References
 

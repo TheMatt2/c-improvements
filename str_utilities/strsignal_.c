@@ -25,8 +25,7 @@ TEST_LINKAGE const char* strsignal_sigdescr(int signum)
     static thread_local char sigbuf[SIGBUF_UNKNOWN_LEN] = {0};
     // Call sigdescr_np() to get signal string
     const char *buf = sigdescr_np(signum);
-    if (buf == NULL)
-    {
+    if (buf == NULL) {
         snprintf(sigbuf, sizeof(sigbuf), "Unknown signal %d", signum);
         buf = sigbuf;
     }
@@ -74,13 +73,11 @@ TEST_LINKAGE const char* strsignal_sys_siglist(int signum)
     static thread_local char sigbuf[SIGBUF_UNKNOWN_LEN] = {0};
     // Call sigdescr_np() to get signal string
     const char *buf = NULL;
-    if (0 <= signum && signum < NSIG)
-    {
+    if (0 <= signum && signum < NSIG) {
         buf = sys_siglist[signum];
     }
 
-    if (buf == NULL)
-    {
+    if (buf == NULL) {
         snprintf(sigbuf, sizeof(sigbuf), "Unknown signal %d", signum);
         buf = sigbuf;
     }
@@ -93,8 +90,7 @@ TEST_LINKAGE const char* strsignal_hardcode(int signum)
 {
     // ISO C says signal identifiers a MACROS, so they can be individually tested for
     // and enabled.
-    switch (signum)
-    {
+    switch (signum) {
 #ifdef SIGHUP
       case SIGHUP   : return "Hangup";
 #endif /* SIGHUP */
@@ -191,7 +187,7 @@ TEST_LINKAGE const char* strsignal_hardcode(int signum)
     }
 
     static thread_local char sigbuf[SIGBUF_UNKNOWN_LEN] = {0};
-    // Call sigdescr_np() to get signal string
+    // Format a message for unknown value.
     snprintf(sigbuf, sizeof(sigbuf), "Unknown signal %d", signum);
     return sigbuf;
 }
