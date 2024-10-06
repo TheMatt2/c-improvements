@@ -2,6 +2,10 @@
 #define STRSIGNAL_H
 #include <string.h>
 
+#ifdef __APPLE__
+#include <Availability.h>
+#endif
+
 /**
  * Convert a signal to a string for printing.
  * Must be thread safe.
@@ -14,8 +18,14 @@
 #define NO_DISCARD /* nothing */
 #endif
 
-/* strsignal() is defined for _GNU_SOURCE or _POSIX_C_SOURCE (glibc versions?) */
+/* strsignal() is defined for _GNU_SOURCE or _POSIX_C_SOURCE since glibc 1.09.
+ * strsignal() is defined for MacOS since 10.6(?).
+ */
 #if defined(_GNU_SOURCE) || _POSIX_C_SOURCE >= 200809L
+#ifndef HAS_STRSIGNAL
+#define HAS_STRSIGNAL 1
+#endif
+#elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && __MAC_OS_X_VERSION_MIN_REQUIRED >= __MAC_OS_X_VERSION_10_6
 #ifndef HAS_STRSIGNAL
 #define HAS_STRSIGNAL 1
 #endif
@@ -23,8 +33,13 @@
 
 /* strsignal() is defacto MT Safe since glibc >= 2.32
  * man 2 strsignal says it isn't safe, but the source code shows it is safe.
- * Treating as the man page not being up to date. */
+ * Treating as the man page not being up to date.
+ * strsignal() is MT safe starting with Mac OSX 10.7 according to man page. */
 #if HAS_STRSIGNAL && __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 32
+#ifndef HAS_STRSIGNAL_MT_SAFE
+#define HAS_STRSIGNAL_MT_SAFE 1
+#endif
+#elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED) && __MAC_OS_X_VERSION_MIN_REQUIRED >= __MAC_OS_X_VERSION_10_7
 #ifndef HAS_STRSIGNAL_MT_SAFE
 #define HAS_STRSIGNAL_MT_SAFE 1
 #endif

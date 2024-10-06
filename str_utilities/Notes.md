@@ -55,8 +55,17 @@ Preferability of Solutions
 | `sigdescr_np`                       | >= glibc 2.32                | Requires `_GNU_SOURCE`                                                                                                                      |
 | `sys_siglist` / `NSIG`              | >= glibc 1.09. < glibc 2.32  | glibc specific                                                                                                                              |
 
+| C Library Function      | MacOS Support   |
+| ----------------------- | --------------- |
+| `strsignal()` MT-Safe   | >= Mac OSX 10.7 |
+| `strsignal()` MT-Unsafe | >= Mac OSX 10.6 (?)  |
+| `strsignal_r()`         | Unknown         |
+
 If `sigdescr_np()` is availiable, `strsignal()` defacto MT-Safe is also available.
 So no reason to use `sigdescr_np()`.
+
+Based on https://stackoverflow.com/a/1719492, assuming `strsignal()` has
+been in MacOSX since at last 10.6, which cooresponds to the year of the post.
 
 Preferability of Solutions
 

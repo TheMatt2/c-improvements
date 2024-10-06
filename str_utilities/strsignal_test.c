@@ -4,9 +4,28 @@
 
 #include <signal.h> // NSIG
 
-// Print GLIBC version
+// Print libc version
+#ifdef __GLIBC__
 #pragma message "GLIBC " STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
-#pragma message "NSIG" STR(NSIG)
+#endif
+#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
+#pragma message "MAC_OS_X_VERSION_MIN_REQUIRED " STR(__MAC_OS_X_VERSION_MIN_REQUIRED)
+#endif
+#ifdef NSIG
+#pragma message "NSIG " STR(NSIG)
+#endif
+#ifdef HAS_STRSIGNAL
+#pragma message "HAS_STRSIGNAL " STR(HAS_STRSIGNAL)
+#endif
+#ifdef HAS_STRSIGNAL_MT_SAFE
+#pragma message "HAS_STRSIGNAL_MT_SAFE " STR(HAS_STRSIGNAL_MT_SAFE)
+#endif
+#ifdef HAS_SIGDESCR_NP
+#pragma message "HAS_SIGDESCR_NP " STR(HAS_SIGDESCR_NP)
+#endif
+#ifdef HAS_SYS_SIGLIST
+#pragma message "HAS_SYS_SIGLIST " STR(HAS_SYS_SIGLIST)
+#endif
 
 // Output Formatting
 #define ROWS 75
