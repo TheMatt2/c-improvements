@@ -17,6 +17,10 @@ $(TEST_TARGETS): % : strsignal_.o strerror_.o strerrorname_.o test_common.o %.o
 %.o : %.c
 	$(CC) -c $(CFLAGS) $^
 
-.PHONY:
+.PHONY: tests
+tests: $(TEST_TARGETS)
+	@for test in $^; do echo $$test && ./$$test; done
+
+.PHONY: clean
 clean:
 	rm -f *.o $(TEST_TARGETS)
