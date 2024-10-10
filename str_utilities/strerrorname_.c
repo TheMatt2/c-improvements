@@ -57,462 +57,501 @@ TEST_LINKAGE const char* strerrorname_printf_m(int errnum)
 #endif /* __GNUC__ */
 #endif /* HAS_PRINTF_M */
 
+/*
+ * Prefer EDEADLK to EDEADLOCK
+ * Prefer EOPNOTSUPP to ENOTSUP
+ * Prefer EAGAIN to EWOULDBLOCK
+ */
+static const char* errnamelist[] = {
+#ifdef E2BIG
+    [ E2BIG ]            = "E2BIG",
+#endif /* E2BIG */
+#ifdef EACCES
+    [ EACCES ]           = "EACCES",
+#endif /* EACCES */
+#ifdef EADDRINUSE
+    [ EADDRINUSE ]       = "EADDRINUSE",
+#endif /* EADDRINUSE */
+#ifdef EADDRNOTAVAIL
+    [ EADDRNOTAVAIL ]    = "EADDRNOTAVAIL",
+#endif /* EADDRNOTAVAIL */
+#ifdef EADV
+    [ EADV ]             = "EADV",
+#endif /* EADV */
+#ifdef EAFNOSUPPORT
+    [ EAFNOSUPPORT ]     = "EAFNOSUPPORT",
+#endif /* EAFNOSUPPORT */
+#ifdef EAGAIN
+    [ EAGAIN ]           = "EAGAIN",
+#endif /* EAGAIN */
+#ifdef EALREADY
+    [ EALREADY ]         = "EALREADY",
+#endif /* EALREADY */
+#ifdef EAUTH
+    [ EAUTH ]            = "EAUTH",
+#endif /* EAUTH */
+#ifdef EBACKGROUND
+    [ EBACKGROUND ]      = "EBACKGROUND",
+#endif /* EBACKGROUND */
+#ifdef EBADARCH
+    [ EBADARCH ]         = "EBADARCH",
+#endif /* EBADARCH */
+#ifdef EBADE
+    [ EBADE ]            = "EBADE",
+#endif /* EBADE */
+#ifdef EBADEXEC
+    [ EBADEXEC ]         = "EBADEXEC",
+#endif /* EBADEXEC */
+#ifdef EBADF
+    [ EBADF ]            = "EBADF",
+#endif /* EBADF */
+#ifdef EBADFD
+    [ EBADFD ]           = "EBADFD",
+#endif /* EBADFD */
+#ifdef EBADMACHO
+    [ EBADMACHO ]        = "EBADMACHO",
+#endif /* EBADMACHO */
+#ifdef EBADMSG
+    [ EBADMSG ]          = "EBADMSG",
+#endif /* EBADMSG */
+#ifdef EBADR
+    [ EBADR ]            = "EBADR",
+#endif /* EBADR */
+#ifdef EBADRPC
+    [ EBADRPC ]          = "EBADRPC",
+#endif /* EBADRPC */
+#ifdef EBADRQC
+    [ EBADRQC ]          = "EBADRQC",
+#endif /* EBADRQC */
+#ifdef EBADSLT
+    [ EBADSLT ]          = "EBADSLT",
+#endif /* EBADSLT */
+#ifdef EBFONT
+    [ EBFONT ]           = "EBFONT",
+#endif /* EBFONT */
+#ifdef EBUSY
+    [ EBUSY ]            = "EBUSY",
+#endif /* EBUSY */
+#ifdef ECANCELED
+    [ ECANCELED ]        = "ECANCELED",
+#endif /* ECANCELED */
+#ifdef ECHILD
+    [ ECHILD ]           = "ECHILD",
+#endif /* ECHILD */
+#ifdef ECHRNG
+    [ ECHRNG ]           = "ECHRNG",
+#endif /* ECHRNG */
+#ifdef ECOMM
+    [ ECOMM ]            = "ECOMM",
+#endif /* ECOMM */
+#ifdef ECONNABORTED
+    [ ECONNABORTED ]     = "ECONNABORTED",
+#endif /* ECONNABORTED */
+#ifdef ECONNREFUSED
+    [ ECONNREFUSED ]     = "ECONNREFUSED",
+#endif /* ECONNREFUSED */
+#ifdef ECONNRESET
+    [ ECONNRESET ]       = "ECONNRESET",
+#endif /* ECONNRESET */
+#ifdef ED
+    [ ED ]               = "ED",
+#endif /* ED */
+#ifdef EDEADLK
+    [ EDEADLK ]          = "EDEADLK",
+#endif /* EDEADLK */
+#if defined(EDEADLOCK) && EDEADLOCK != EDEADLK
+    [ EDEADLOCK ]        = "EDEADLOCK",
+#endif /* EDEADLOCK */
+#ifdef EDESTADDRREQ
+    [ EDESTADDRREQ ]     = "EDESTADDRREQ",
+#endif /* EDESTADDRREQ */
+#ifdef EDEVERR
+    [ EDEVERR ]          = "EDEVERR",
+#endif /* EDEVERR */
+#ifdef EDIED
+    [ EDIED ]            = "EDIED",
+#endif /* EDIED */
+#ifdef EDOM
+    [ EDOM ]             = "EDOM",
+#endif /* EDOM */
+#ifdef EDOOFUS
+    [ EDOOFUS ]          = "EDOOFUS",
+#endif /* EDOOFUS */
+#ifdef EDOTDOT
+    [ EDOTDOT ]          = "EDOTDOT",
+#endif /* EDOTDOT */
+#ifdef EDQUOT
+    [ EDQUOT ]           = "EDQUOT",
+#endif /* EDQUOT */
+#ifdef EEXIST
+    [ EEXIST ]           = "EEXIST",
+#endif /* EEXIST */
+#ifdef EFAULT
+    [ EFAULT ]           = "EFAULT",
+#endif /* EFAULT */
+#ifdef EFBIG
+    [ EFBIG ]            = "EFBIG",
+#endif /* EFBIG */
+#ifdef EFTYPE
+    [ EFTYPE ]           = "EFTYPE",
+#endif /* EFTYPE */
+#ifdef EGRATUITOUS
+    [ EGRATUITOUS ]      = "EGRATUITOUS",
+#endif /* EGRATUITOUS */
+#ifdef EGREGIOUS
+    [ EGREGIOUS ]        = "EGREGIOUS",
+#endif /* EGREGIOUS */
+#ifdef EHOSTDOWN
+    [ EHOSTDOWN ]        = "EHOSTDOWN",
+#endif /* EHOSTDOWN */
+#ifdef EHOSTUNREACH
+    [ EHOSTUNREACH ]     = "EHOSTUNREACH",
+#endif /* EHOSTUNREACH */
+#ifdef EHWPOISON
+    [ EHWPOISON ]        = "EHWPOISON",
+#endif /* EHWPOISON */
+#ifdef EIDRM
+    [ EIDRM ]            = "EIDRM",
+#endif /* EIDRM */
+#ifdef EIEIO
+    [ EIEIO ]            = "EIEIO",
+#endif /* EIEIO */
+#ifdef EILSEQ
+    [ EILSEQ ]           = "EILSEQ",
+#endif /* EILSEQ */
+#ifdef EINPROGRESS
+    [ EINPROGRESS ]      = "EINPROGRESS",
+#endif /* EINPROGRESS */
+#ifdef EINTR
+    [ EINTR ]            = "EINTR",
+#endif /* EINTR */
+#ifdef EINVAL
+    [ EINVAL ]           = "EINVAL",
+#endif /* EINVAL */
+#ifdef EIO
+    [ EIO ]              = "EIO",
+#endif /* EIO */
+#ifdef EISCONN
+    [ EISCONN ]          = "EISCONN",
+#endif /* EISCONN */
+#ifdef EISDIR
+    [ EISDIR ]           = "EISDIR",
+#endif /* EISDIR */
+#ifdef EISNAM
+    [ EISNAM ]           = "EISNAM",
+#endif /* EISNAM */
+#ifdef EKEYEXPIRED
+    [ EKEYEXPIRED ]      = "EKEYEXPIRED",
+#endif /* EKEYEXPIRED */
+#ifdef EKEYREJECTED
+    [ EKEYREJECTED ]     = "EKEYREJECTED",
+#endif /* EKEYREJECTED */
+#ifdef EKEYREVOKED
+    [ EKEYREVOKED ]      = "EKEYREVOKED",
+#endif /* EKEYREVOKED */
+#ifdef EL2HLT
+    [ EL2HLT ]           = "EL2HLT",
+#endif /* EL2HLT */
+#ifdef EL2NSYNC
+    [ EL2NSYNC ]         = "EL2NSYNC",
+#endif /* EL2NSYNC */
+#ifdef EL3HLT
+    [ EL3HLT ]           = "EL3HLT",
+#endif /* EL3HLT */
+#ifdef EL3RST
+    [ EL3RST ]           = "EL3RST",
+#endif /* EL3RST */
+#ifdef ELIBACC
+    [ ELIBACC ]          = "ELIBACC",
+#endif /* ELIBACC */
+#ifdef ELIBBAD
+    [ ELIBBAD ]          = "ELIBBAD",
+#endif /* ELIBBAD */
+#ifdef ELIBEXEC
+    [ ELIBEXEC ]         = "ELIBEXEC",
+#endif /* ELIBEXEC */
+#ifdef ELIBMAX
+    [ ELIBMAX ]          = "ELIBMAX",
+#endif /* ELIBMAX */
+#ifdef ELIBSCN
+    [ ELIBSCN ]          = "ELIBSCN",
+#endif /* ELIBSCN */
+#ifdef ELNRNG
+    [ ELNRNG ]           = "ELNRNG",
+#endif /* ELNRNG */
+#ifdef ELOOP
+    [ ELOOP ]            = "ELOOP",
+#endif /* ELOOP */
+#ifdef EMEDIUMTYPE
+    [ EMEDIUMTYPE ]      = "EMEDIUMTYPE",
+#endif /* EMEDIUMTYPE */
+#ifdef EMFILE
+    [ EMFILE ]           = "EMFILE",
+#endif /* EMFILE */
+#ifdef EMLINK
+    [ EMLINK ]           = "EMLINK",
+#endif /* EMLINK */
+#ifdef EMSGSIZE
+    [ EMSGSIZE ]         = "EMSGSIZE",
+#endif /* EMSGSIZE */
+#ifdef EMULTIHOP
+    [ EMULTIHOP ]        = "EMULTIHOP",
+#endif /* EMULTIHOP */
+#ifdef ENAMETOOLONG
+    [ ENAMETOOLONG ]     = "ENAMETOOLONG",
+#endif /* ENAMETOOLONG */
+#ifdef ENAVAIL
+    [ ENAVAIL ]          = "ENAVAIL",
+#endif /* ENAVAIL */
+#ifdef ENEEDAUTH
+    [ ENEEDAUTH ]        = "ENEEDAUTH",
+#endif /* ENEEDAUTH */
+#ifdef ENETDOWN
+    [ ENETDOWN ]         = "ENETDOWN",
+#endif /* ENETDOWN */
+#ifdef ENETRESET
+    [ ENETRESET ]        = "ENETRESET",
+#endif /* ENETRESET */
+#ifdef ENETUNREACH
+    [ ENETUNREACH ]      = "ENETUNREACH",
+#endif /* ENETUNREACH */
+#ifdef ENFILE
+    [ ENFILE ]           = "ENFILE",
+#endif /* ENFILE */
+#ifdef ENOANO
+    [ ENOANO ]           = "ENOANO",
+#endif /* ENOANO */
+#ifdef ENOATTR
+    [ ENOATTR ]          = "ENOATTR",
+#endif /* ENOATTR */
+#ifdef ENOBUFS
+    [ ENOBUFS ]          = "ENOBUFS",
+#endif /* ENOBUFS */
+#ifdef ENOCSI
+    [ ENOCSI ]           = "ENOCSI",
+#endif /* ENOCSI */
+#ifdef ENODATA
+    [ ENODATA ]          = "ENODATA",
+#endif /* ENODATA */
+#ifdef ENODEV
+    [ ENODEV ]           = "ENODEV",
+#endif /* ENODEV */
+#ifdef ENOENT
+    [ ENOENT ]           = "ENOENT",
+#endif /* ENOENT */
+#ifdef ENOEXEC
+    [ ENOEXEC ]          = "ENOEXEC",
+#endif /* ENOEXEC */
+#ifdef ENOKEY
+    [ ENOKEY ]           = "ENOKEY",
+#endif /* ENOKEY */
+#ifdef ENOLCK
+    [ ENOLCK ]           = "ENOLCK",
+#endif /* ENOLCK */
+#ifdef ENOLINK
+    [ ENOLINK ]          = "ENOLINK",
+#endif /* ENOLINK */
+#ifdef ENOMEDIUM
+    [ ENOMEDIUM ]        = "ENOMEDIUM",
+#endif /* ENOMEDIUM */
+#ifdef ENOMEM
+    [ ENOMEM ]           = "ENOMEM",
+#endif /* ENOMEM */
+#ifdef ENOMSG
+    [ ENOMSG ]           = "ENOMSG",
+#endif /* ENOMSG */
+#ifdef ENONET
+    [ ENONET ]           = "ENONET",
+#endif /* ENONET */
+#ifdef ENOPKG
+    [ ENOPKG ]           = "ENOPKG",
+#endif /* ENOPKG */
+#ifdef ENOPROTOOPT
+    [ ENOPROTOOPT ]      = "ENOPROTOOPT",
+#endif /* ENOPROTOOPT */
+#ifdef ENOSPC
+    [ ENOSPC ]           = "ENOSPC",
+#endif /* ENOSPC */
+#ifdef ENOSR
+    [ ENOSR ]            = "ENOSR",
+#endif /* ENOSR */
+#ifdef ENOSTR
+    [ ENOSTR ]           = "ENOSTR",
+#endif /* ENOSTR */
+#ifdef ENOSYS
+    [ ENOSYS ]           = "ENOSYS",
+#endif /* ENOSYS */
+#ifdef ENOTBLK
+    [ ENOTBLK ]          = "ENOTBLK",
+#endif /* ENOTBLK */
+#ifdef ENOTCAPABLE
+    [ ENOTCAPABLE ]      = "ENOTCAPABLE",
+#endif /* ENOTCAPABLE */
+#ifdef ENOTCONN
+    [ ENOTCONN ]         = "ENOTCONN",
+#endif /* ENOTCONN */
+#ifdef ENOTDIR
+    [ ENOTDIR ]          = "ENOTDIR",
+#endif /* ENOTDIR */
+#ifdef ENOTEMPTY
+    [ ENOTEMPTY ]        = "ENOTEMPTY",
+#endif /* ENOTEMPTY */
+#ifdef ENOTNAM
+    [ ENOTNAM ]          = "ENOTNAM",
+#endif /* ENOTNAM */
+#ifdef ENOTRECOVERABLE
+    [ ENOTRECOVERABLE ]  = "ENOTRECOVERABLE",
+#endif /* ENOTRECOVERABLE */
+#ifdef ENOTSOCK
+    [ ENOTSOCK ]         = "ENOTSOCK",
+#endif /* ENOTSOCK */
+#if defined(ENOTSUP) && ENOTSUP != EOPNOTSUPP
+    [ ENOTSUP ]          = "ENOTSUP",
+#endif /* ENOTSUP */
+#ifdef ENOTTY
+    [ ENOTTY ]           = "ENOTTY",
+#endif /* ENOTTY */
+#ifdef ENOTUNIQ
+    [ ENOTUNIQ ]         = "ENOTUNIQ",
+#endif /* ENOTUNIQ */
+#ifdef ENXIO
+    [ ENXIO ]            = "ENXIO",
+#endif /* ENXIO */
+#ifdef EOPNOTSUPP
+    [ EOPNOTSUPP ]       = "EOPNOTSUPP",
+#endif /* EOPNOTSUPP */
+#ifdef EOVERFLOW
+    [ EOVERFLOW ]        = "EOVERFLOW",
+#endif /* EOVERFLOW */
+#ifdef EOWNERDEAD
+    [ EOWNERDEAD ]       = "EOWNERDEAD",
+#endif /* EOWNERDEAD */
+#ifdef EPERM
+    [ EPERM ]            = "EPERM",
+#endif /* EPERM */
+#ifdef EPFNOSUPPORT
+    [ EPFNOSUPPORT ]     = "EPFNOSUPPORT",
+#endif /* EPFNOSUPPORT */
+#ifdef EPIPE
+    [ EPIPE ]            = "EPIPE",
+#endif /* EPIPE */
+#ifdef EPROCLIM
+    [ EPROCLIM ]         = "EPROCLIM",
+#endif /* EPROCLIM */
+#ifdef EPROCUNAVAIL
+    [ EPROCUNAVAIL ]     = "EPROCUNAVAIL",
+#endif /* EPROCUNAVAIL */
+#ifdef EPROGMISMATCH
+    [ EPROGMISMATCH ]    = "EPROGMISMATCH",
+#endif /* EPROGMISMATCH */
+#ifdef EPROGUNAVAIL
+    [ EPROGUNAVAIL ]     = "EPROGUNAVAIL",
+#endif /* EPROGUNAVAIL */
+#ifdef EPROTO
+    [ EPROTO ]           = "EPROTO",
+#endif /* EPROTO */
+#ifdef EPROTONOSUPPORT
+    [ EPROTONOSUPPORT ]  = "EPROTONOSUPPORT",
+#endif /* EPROTONOSUPPORT */
+#ifdef EPROTOTYPE
+    [ EPROTOTYPE ]       = "EPROTOTYPE",
+#endif /* EPROTOTYPE */
+#ifdef EPWROFF
+    [ EPWROFF ]          = "EPWROFF",
+#endif /* EPWROFF */
+#ifdef ERANGE
+    [ ERANGE ]           = "ERANGE",
+#endif /* ERANGE */
+#ifdef EREMCHG
+    [ EREMCHG ]          = "EREMCHG",
+#endif /* EREMCHG */
+#ifdef EREMOTE
+    [ EREMOTE ]          = "EREMOTE",
+#endif /* EREMOTE */
+#ifdef EREMOTEIO
+    [ EREMOTEIO ]        = "EREMOTEIO",
+#endif /* EREMOTEIO */
+#ifdef ERESTART
+    [ ERESTART ]         = "ERESTART",
+#endif /* ERESTART */
+#ifdef ERFKILL
+    [ ERFKILL ]          = "ERFKILL",
+#endif /* ERFKILL */
+#ifdef EROFS
+    [ EROFS ]            = "EROFS",
+#endif /* EROFS */
+#ifdef ERPCMISMATCH
+    [ ERPCMISMATCH ]     = "ERPCMISMATCH",
+#endif /* ERPCMISMATCH */
+#ifdef ESHLIBVERS
+    [ ESHLIBVERS ]       = "ESHLIBVERS",
+#endif /* ESHLIBVERS */
+#ifdef ESHUTDOWN
+    [ ESHUTDOWN ]        = "ESHUTDOWN",
+#endif /* ESHUTDOWN */
+#ifdef ESOCKTNOSUPPORT
+    [ ESOCKTNOSUPPORT ]  = "ESOCKTNOSUPPORT",
+#endif /* ESOCKTNOSUPPORT */
+#ifdef ESPIPE
+    [ ESPIPE ]           = "ESPIPE",
+#endif /* ESPIPE */
+#ifdef ESRCH
+    [ ESRCH ]            = "ESRCH",
+#endif /* ESRCH */
+#ifdef ESRMNT
+    [ ESRMNT ]           = "ESRMNT",
+#endif /* ESRMNT */
+#ifdef ESTALE
+    [ ESTALE ]           = "ESTALE",
+#endif /* ESTALE */
+#ifdef ESTRPIPE
+    [ ESTRPIPE ]         = "ESTRPIPE",
+#endif /* ESTRPIPE */
+#ifdef ETIME
+    [ ETIME ]            = "ETIME",
+#endif /* ETIME */
+#ifdef ETIMEDOUT
+    [ ETIMEDOUT ]        = "ETIMEDOUT",
+#endif /* ETIMEDOUT */
+#ifdef ETOOMANYREFS
+    [ ETOOMANYREFS ]     = "ETOOMANYREFS",
+#endif /* ETOOMANYREFS */
+#ifdef ETXTBSY
+    [ ETXTBSY ]          = "ETXTBSY",
+#endif /* ETXTBSY */
+#ifdef EUCLEAN
+    [ EUCLEAN ]          = "EUCLEAN",
+#endif /* EUCLEAN */
+#ifdef EUNATCH
+    [ EUNATCH ]          = "EUNATCH",
+#endif /* EUNATCH */
+#ifdef EUSERS
+    [ EUSERS ]           = "EUSERS",
+#endif /* EUSERS */
+#if defined(EWOULDBLOCK) && EWOULDBLOCK != EAGAIN
+    [ EWOULDBLOCK ]      = "EWOULDBLOCK",
+#endif /* EWOULDBLOCK */
+#ifdef EXDEV
+    [ EXDEV ]            = "EXDEV",
+#endif /* EXDEV */
+#ifdef EXFULL
+    [ EXFULL ]           = "EXFULL",
+#endif /* EXFULL */
+};
+
+#define ERRNAMELIST_LEN ARRAY_SIZE(errnamelist)
+
 // Hardcode solution
 TEST_LINKAGE const char* strerrorname_hardcode(int errnum)
 {
     // There is no C standard way to get the acronym for the errno
     // errors. However, these are defined by ISO C as macros, so they
     // can be tested for. Some errno macros may have the same value.
-#ifdef E2BIG
-    if (errnum == E2BIG)            return "E2BIG";
-#endif /* E2BIG */
-#ifdef EACCES
-    if (errnum == EACCES)           return "EACCES";
-#endif /* EACCES */
-#ifdef EADDRINUSE
-    if (errnum == EADDRINUSE)       return "EADDRINUSE";
-#endif /* EADDRINUSE */
-#ifdef EADDRNOTAVAIL
-    if (errnum == EADDRNOTAVAIL)    return "EADDRNOTAVAIL";
-#endif /* EADDRNOTAVAIL */
-#ifdef EADV
-    if (errnum == EADV)             return "EADV";
-#endif /* EADV */
-#ifdef EAFNOSUPPORT
-    if (errnum == EAFNOSUPPORT)     return "EAFNOSUPPORT";
-#endif /* EAFNOSUPPORT */
-#ifdef EAGAIN
-    if (errnum == EAGAIN)           return "EAGAIN";
-#endif /* EAGAIN */
-#ifdef EALREADY
-    if (errnum == EALREADY)         return "EALREADY";
-#endif /* EALREADY */
-#ifdef EAUTH
-    if (errnum == EAUTH)            return "EAUTH";
-#endif /* EAUTH */
-#ifdef EBADARCH
-    if (errnum == EBADARCH)         return "EBADARCH";
-#endif /* EBADARCH */
-#ifdef EBADE
-    if (errnum == EBADE)            return "EBADE";
-#endif /* EBADE */
-#ifdef EBADEXEC
-    if (errnum == EBADEXEC)         return "EBADEXEC";
-#endif /* EBADEXEC */
-#ifdef EBADF
-    if (errnum == EBADF)            return "EBADF";
-#endif /* EBADF */
-#ifdef EBADFD
-    if (errnum == EBADFD)           return "EBADFD";
-#endif /* EBADFD */
-#ifdef EBADMACHO
-    if (errnum == EBADMACHO)        return "EBADMACHO";
-#endif /* EBADMACHO */
-#ifdef EBADMSG
-    if (errnum == EBADMSG)          return "EBADMSG";
-#endif /* EBADMSG */
-#ifdef EBADR
-    if (errnum == EBADR)            return "EBADR";
-#endif /* EBADR */
-#ifdef EBADRPC
-    if (errnum == EBADRPC)          return "EBADRPC";
-#endif /* EBADRPC */
-#ifdef EBADRQC
-    if (errnum == EBADRQC)          return "EBADRQC";
-#endif /* EBADRQC */
-#ifdef EBADSLT
-    if (errnum == EBADSLT)          return "EBADSLT";
-#endif /* EBADSLT */
-#ifdef EBFONT
-    if (errnum == EBFONT)           return "EBFONT";
-#endif /* EBFONT */
-#ifdef EBUSY
-    if (errnum == EBUSY)            return "EBUSY";
-#endif /* EBUSY */
-#ifdef ECANCELED
-    if (errnum == ECANCELED)        return "ECANCELED";
-#endif /* ECANCELED */
-#ifdef ECHILD
-    if (errnum == ECHILD)           return "ECHILD";
-#endif /* ECHILD */
-#ifdef ECHRNG
-    if (errnum == ECHRNG)           return "ECHRNG";
-#endif /* ECHRNG */
-#ifdef ECOMM
-    if (errnum == ECOMM)            return "ECOMM";
-#endif /* ECOMM */
-#ifdef ECONNABORTED
-    if (errnum == ECONNABORTED)     return "ECONNABORTED";
-#endif /* ECONNABORTED */
-#ifdef ECONNREFUSED
-    if (errnum == ECONNREFUSED)     return "ECONNREFUSED";
-#endif /* ECONNREFUSED */
-#ifdef ECONNRESET
-    if (errnum == ECONNRESET)       return "ECONNRESET";
-#endif /* ECONNRESET */
-#ifdef EDEADLK
-    if (errnum == EDEADLK)          return "EDEADLK";
-#endif /* EDEADLK */
-#ifdef EDEADLOCK
-    if (errnum == EDEADLOCK)        return "EDEADLOCK";
-#endif /* EDEADLOCK */
-#ifdef EDESTADDRREQ
-    if (errnum == EDESTADDRREQ)     return "EDESTADDRREQ";
-#endif /* EDESTADDRREQ */
-#ifdef EDEVERR
-    if (errnum == EDEVERR)          return "EDEVERR";
-#endif /* EDEVERR */
-#ifdef EDOM
-    if (errnum == EDOM)             return "EDOM";
-#endif /* EDOM */
-#ifdef EDOTDOT
-    if (errnum == EDOTDOT)          return "EDOTDOT";
-#endif /* EDOTDOT */
-#ifdef EDQUOT
-    if (errnum == EDQUOT)           return "EDQUOT";
-#endif /* EDQUOT */
-#ifdef EEXIST
-    if (errnum == EEXIST)           return "EEXIST";
-#endif /* EEXIST */
-#ifdef EFAULT
-    if (errnum == EFAULT)           return "EFAULT";
-#endif /* EFAULT */
-#ifdef EFBIG
-    if (errnum == EFBIG)            return "EFBIG";
-#endif /* EFBIG */
-#ifdef EFTYPE
-    if (errnum == EFTYPE)           return "EFTYPE";
-#endif /* EFTYPE */
-#ifdef EHOSTDOWN
-    if (errnum == EHOSTDOWN)        return "EHOSTDOWN";
-#endif /* EHOSTDOWN */
-#ifdef EHOSTUNREACH
-    if (errnum == EHOSTUNREACH)     return "EHOSTUNREACH";
-#endif /* EHOSTUNREACH */
-#ifdef EHWPOISON
-    if (errnum == EHWPOISON)        return "EHWPOISON";
-#endif /* EHWPOISON */
-#ifdef EIDRM
-    if (errnum == EIDRM)            return "EIDRM";
-#endif /* EIDRM */
-#ifdef EILSEQ
-    if (errnum == EILSEQ)           return "EILSEQ";
-#endif /* EILSEQ */
-#ifdef EINPROGRESS
-    if (errnum == EINPROGRESS)      return "EINPROGRESS";
-#endif /* EINPROGRESS */
-#ifdef EINTR
-    if (errnum == EINTR)            return "EINTR";
-#endif /* EINTR */
-#ifdef EINVAL
-    if (errnum == EINVAL)           return "EINVAL";
-#endif /* EINVAL */
-#ifdef EIO
-    if (errnum == EIO)              return "EIO";
-#endif /* EIO */
-#ifdef EISCONN
-    if (errnum == EISCONN)          return "EISCONN";
-#endif /* EISCONN */
-#ifdef EISDIR
-    if (errnum == EISDIR)           return "EISDIR";
-#endif /* EISDIR */
-#ifdef EISNAM
-    if (errnum == EISNAM)           return "EISNAM";
-#endif /* EISNAM */
-#ifdef EKEYEXPIRED
-    if (errnum == EKEYEXPIRED)      return "EKEYEXPIRED";
-#endif /* EKEYEXPIRED */
-#ifdef EKEYREJECTED
-    if (errnum == EKEYREJECTED)     return "EKEYREJECTED";
-#endif /* EKEYREJECTED */
-#ifdef EKEYREVOKED
-    if (errnum == EKEYREVOKED)      return "EKEYREVOKED";
-#endif /* EKEYREVOKED */
-#ifdef EL2HLT
-    if (errnum == EL2HLT)           return "EL2HLT";
-#endif /* EL2HLT */
-#ifdef EL2NSYNC
-    if (errnum == EL2NSYNC)         return "EL2NSYNC";
-#endif /* EL2NSYNC */
-#ifdef EL3HLT
-    if (errnum == EL3HLT)           return "EL3HLT";
-#endif /* EL3HLT */
-#ifdef EL3RST
-    if (errnum == EL3RST)           return "EL3RST";
-#endif /* EL3RST */
-#ifdef ELIBACC
-    if (errnum == ELIBACC)          return "ELIBACC";
-#endif /* ELIBACC */
-#ifdef ELIBBAD
-    if (errnum == ELIBBAD)          return "ELIBBAD";
-#endif /* ELIBBAD */
-#ifdef ELIBEXEC
-    if (errnum == ELIBEXEC)         return "ELIBEXEC";
-#endif /* ELIBEXEC */
-#ifdef ELIBMAX
-    if (errnum == ELIBMAX)          return "ELIBMAX";
-#endif /* ELIBMAX */
-#ifdef ELIBSCN
-    if (errnum == ELIBSCN)          return "ELIBSCN";
-#endif /* ELIBSCN */
-#ifdef ELNRNG
-    if (errnum == ELNRNG)           return "ELNRNG";
-#endif /* ELNRNG */
-#ifdef ELOOP
-    if (errnum == ELOOP)            return "ELOOP";
-#endif /* ELOOP */
-#ifdef EMEDIUMTYPE
-    if (errnum == EMEDIUMTYPE)      return "EMEDIUMTYPE";
-#endif /* EMEDIUMTYPE */
-#ifdef EMFILE
-    if (errnum == EMFILE)           return "EMFILE";
-#endif /* EMFILE */
-#ifdef EMLINK
-    if (errnum == EMLINK)           return "EMLINK";
-#endif /* EMLINK */
-#ifdef EMSGSIZE
-    if (errnum == EMSGSIZE)         return "EMSGSIZE";
-#endif /* EMSGSIZE */
-#ifdef EMULTIHOP
-    if (errnum == EMULTIHOP)        return "EMULTIHOP";
-#endif /* EMULTIHOP */
-#ifdef ENAMETOOLONG
-    if (errnum == ENAMETOOLONG)     return "ENAMETOOLONG";
-#endif /* ENAMETOOLONG */
-#ifdef ENAVAIL
-    if (errnum == ENAVAIL)          return "ENAVAIL";
-#endif /* ENAVAIL */
-#ifdef ENEEDAUTH
-    if (errnum == ENEEDAUTH)        return "ENEEDAUTH";
-#endif /* ENEEDAUTH */
-#ifdef ENETDOWN
-    if (errnum == ENETDOWN)         return "ENETDOWN";
-#endif /* ENETDOWN */
-#ifdef ENETRESET
-    if (errnum == ENETRESET)        return "ENETRESET";
-#endif /* ENETRESET */
-#ifdef ENETUNREACH
-    if (errnum == ENETUNREACH)      return "ENETUNREACH";
-#endif /* ENETUNREACH */
-#ifdef ENFILE
-    if (errnum == ENFILE)           return "ENFILE";
-#endif /* ENFILE */
-#ifdef ENOANO
-    if (errnum == ENOANO)           return "ENOANO";
-#endif /* ENOANO */
-#ifdef ENOATTR
-    if (errnum == ENOATTR)          return "ENOATTR";
-#endif /* ENOATTR */
-#ifdef ENOBUFS
-    if (errnum == ENOBUFS)          return "ENOBUFS";
-#endif /* ENOBUFS */
-#ifdef ENOCSI
-    if (errnum == ENOCSI)           return "ENOCSI";
-#endif /* ENOCSI */
-#ifdef ENODATA
-    if (errnum == ENODATA)          return "ENODATA";
-#endif /* ENODATA */
-#ifdef ENODEV
-    if (errnum == ENODEV)           return "ENODEV";
-#endif /* ENODEV */
-#ifdef ENOENT
-    if (errnum == ENOENT)           return "ENOENT";
-#endif /* ENOENT */
-#ifdef ENOEXEC
-    if (errnum == ENOEXEC)          return "ENOEXEC";
-#endif /* ENOEXEC */
-#ifdef ENOKEY
-    if (errnum == ENOKEY)           return "ENOKEY";
-#endif /* ENOKEY */
-#ifdef ENOLCK
-    if (errnum == ENOLCK)           return "ENOLCK";
-#endif /* ENOLCK */
-#ifdef ENOLINK
-    if (errnum == ENOLINK)          return "ENOLINK";
-#endif /* ENOLINK */
-#ifdef ENOMEDIUM
-    if (errnum == ENOMEDIUM)        return "ENOMEDIUM";
-#endif /* ENOMEDIUM */
-#ifdef ENOMEM
-    if (errnum == ENOMEM)           return "ENOMEM";
-#endif /* ENOMEM */
-#ifdef ENOMSG
-    if (errnum == ENOMSG)           return "ENOMSG";
-#endif /* ENOMSG */
-#ifdef ENONET
-    if (errnum == ENONET)           return "ENONET";
-#endif /* ENONET */
-#ifdef ENOPKG
-    if (errnum == ENOPKG)           return "ENOPKG";
-#endif /* ENOPKG */
-#ifdef ENOPROTOOPT
-    if (errnum == ENOPROTOOPT)      return "ENOPROTOOPT";
-#endif /* ENOPROTOOPT */
-#ifdef ENOSPC
-    if (errnum == ENOSPC)           return "ENOSPC";
-#endif /* ENOSPC */
-#ifdef ENOSR
-    if (errnum == ENOSR)            return "ENOSR";
-#endif /* ENOSR */
-#ifdef ENOSTR
-    if (errnum == ENOSTR)           return "ENOSTR";
-#endif /* ENOSTR */
-#ifdef ENOSYS
-    if (errnum == ENOSYS)           return "ENOSYS";
-#endif /* ENOSYS */
-#ifdef ENOTBLK
-    if (errnum == ENOTBLK)          return "ENOTBLK";
-#endif /* ENOTBLK */
-#ifdef ENOTCONN
-    if (errnum == ENOTCONN)         return "ENOTCONN";
-#endif /* ENOTCONN */
-#ifdef ENOTDIR
-    if (errnum == ENOTDIR)          return "ENOTDIR";
-#endif /* ENOTDIR */
-#ifdef ENOTEMPTY
-    if (errnum == ENOTEMPTY)        return "ENOTEMPTY";
-#endif /* ENOTEMPTY */
-#ifdef ENOTNAM
-    if (errnum == ENOTNAM)          return "ENOTNAM";
-#endif /* ENOTNAM */
-#ifdef ENOTRECOVERABLE
-    if (errnum == ENOTRECOVERABLE)  return "ENOTRECOVERABLE";
-#endif /* ENOTRECOVERABLE */
-#ifdef ENOTSOCK
-    if (errnum == ENOTSOCK)         return "ENOTSOCK";
-#endif /* ENOTSOCK */
-#ifdef ENOTSUP
-    if (errnum == ENOTSUP)          return "ENOTSUP";
-#endif /* ENOTSUP */
-#ifdef ENOTTY
-    if (errnum == ENOTTY)           return "ENOTTY";
-#endif /* ENOTTY */
-#ifdef ENOTUNIQ
-    if (errnum == ENOTUNIQ)         return "ENOTUNIQ";
-#endif /* ENOTUNIQ */
-#ifdef ENXIO
-    if (errnum == ENXIO)            return "ENXIO";
-#endif /* ENXIO */
-#ifdef EOPNOTSUPP
-    if (errnum == EOPNOTSUPP)       return "EOPNOTSUPP";
-#endif /* EOPNOTSUPP */
-#ifdef EOVERFLOW
-    if (errnum == EOVERFLOW)        return "EOVERFLOW";
-#endif /* EOVERFLOW */
-#ifdef EOWNERDEAD
-    if (errnum == EOWNERDEAD)       return "EOWNERDEAD";
-#endif /* EOWNERDEAD */
-#ifdef EPERM
-    if (errnum == EPERM)            return "EPERM";
-#endif /* EPERM */
-#ifdef EPFNOSUPPORT
-    if (errnum == EPFNOSUPPORT)     return "EPFNOSUPPORT";
-#endif /* EPFNOSUPPORT */
-#ifdef EPIPE
-    if (errnum == EPIPE)            return "EPIPE";
-#endif /* EPIPE */
-#ifdef EPROCLIM
-    if (errnum == EPROCLIM)         return "EPROCLIM";
-#endif /* EPROCLIM */
-#ifdef EPROCUNAVAIL
-    if (errnum == EPROCUNAVAIL)     return "EPROCUNAVAIL";
-#endif /* EPROCUNAVAIL */
-#ifdef EPROGMISMATCH
-    if (errnum == EPROGMISMATCH)    return "EPROGMISMATCH";
-#endif /* EPROGMISMATCH */
-#ifdef EPROGUNAVAIL
-    if (errnum == EPROGUNAVAIL)     return "EPROGUNAVAIL";
-#endif /* EPROGUNAVAIL */
-#ifdef EPROTO
-    if (errnum == EPROTO)           return "EPROTO";
-#endif /* EPROTO */
-#ifdef EPROTONOSUPPORT
-    if (errnum == EPROTONOSUPPORT)  return "EPROTONOSUPPORT";
-#endif /* EPROTONOSUPPORT */
-#ifdef EPROTOTYPE
-    if (errnum == EPROTOTYPE)       return "EPROTOTYPE";
-#endif /* EPROTOTYPE */
-#ifdef EPWROFF
-    if (errnum == EPWROFF)          return "EPWROFF";
-#endif /* EPWROFF */
-#ifdef ERANGE
-    if (errnum == ERANGE)           return "ERANGE";
-#endif /* ERANGE */
-#ifdef EREMCHG
-    if (errnum == EREMCHG)          return "EREMCHG";
-#endif /* EREMCHG */
-#ifdef EREMOTE
-    if (errnum == EREMOTE)          return "EREMOTE";
-#endif /* EREMOTE */
-#ifdef EREMOTEIO
-    if (errnum == EREMOTEIO)        return "EREMOTEIO";
-#endif /* EREMOTEIO */
-#ifdef ERESTART
-    if (errnum == ERESTART)         return "ERESTART";
-#endif /* ERESTART */
-#ifdef ERFKILL
-    if (errnum == ERFKILL)          return "ERFKILL";
-#endif /* ERFKILL */
-#ifdef EROFS
-    if (errnum == EROFS)            return "EROFS";
-#endif /* EROFS */
-#ifdef ERPCMISMATCH
-    if (errnum == ERPCMISMATCH)     return "ERPCMISMATCH";
-#endif /* ERPCMISMATCH */
-#ifdef ESHLIBVERS
-    if (errnum == ESHLIBVERS)       return "ESHLIBVERS";
-#endif /* ESHLIBVERS */
-#ifdef ESHUTDOWN
-    if (errnum == ESHUTDOWN)        return "ESHUTDOWN";
-#endif /* ESHUTDOWN */
-#ifdef ESOCKTNOSUPPORT
-    if (errnum == ESOCKTNOSUPPORT)  return "ESOCKTNOSUPPORT";
-#endif /* ESOCKTNOSUPPORT */
-#ifdef ESPIPE
-    if (errnum == ESPIPE)           return "ESPIPE";
-#endif /* ESPIPE */
-#ifdef ESRCH
-    if (errnum == ESRCH)            return "ESRCH";
-#endif /* ESRCH */
-#ifdef ESRMNT
-    if (errnum == ESRMNT)           return "ESRMNT";
-#endif /* ESRMNT */
-#ifdef ESTALE
-    if (errnum == ESTALE)           return "ESTALE";
-#endif /* ESTALE */
-#ifdef ESTRPIPE
-    if (errnum == ESTRPIPE)         return "ESTRPIPE";
-#endif /* ESTRPIPE */
-#ifdef ETIME
-    if (errnum == ETIME)            return "ETIME";
-#endif /* ETIME */
-#ifdef ETIMEDOUT
-    if (errnum == ETIMEDOUT)        return "ETIMEDOUT";
-#endif /* ETIMEDOUT */
-#ifdef ETOOMANYREFS
-    if (errnum == ETOOMANYREFS)     return "ETOOMANYREFS";
-#endif /* ETOOMANYREFS */
-#ifdef ETXTBSY
-    if (errnum == ETXTBSY)          return "ETXTBSY";
-#endif /* ETXTBSY */
-#ifdef EUCLEAN
-    if (errnum == EUCLEAN)          return "EUCLEAN";
-#endif /* EUCLEAN */
-#ifdef EUNATCH
-    if (errnum == EUNATCH)          return "EUNATCH";
-#endif /* EUNATCH */
-#ifdef EUSERS
-    if (errnum == EUSERS)           return "EUSERS";
-#endif /* EUSERS */
-#ifdef EWOULDBLOCK
-    if (errnum == EWOULDBLOCK)      return "EWOULDBLOCK";
-#endif /* EWOULDBLOCK */
-#ifdef EXDEV
-    if (errnum == EXDEV)            return "EXDEV";
-#endif /* EXDEV */
-#ifdef EXFULL
-    if (errnum == EXFULL)           return "EXFULL";
-#endif /* EXFULL */
+    if (0 < errnum && errnum < ERRNAMELIST_LEN)
+    {
+        const char *buf = errnamelist[errnum];
+        if (buf != NULL) return buf;
+    }
 
     // Thread local buffer for errors.
     static thread_local char errbuf[ERRBUF_UNKNOWN_LEN] = {0};
