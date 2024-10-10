@@ -1,3 +1,4 @@
+// gcc -Wall -std=c11 ./strerror_check.c -o strerror_check
 #define _GNU_SOURCE
 #include <time.h>
 #include <stdio.h>
