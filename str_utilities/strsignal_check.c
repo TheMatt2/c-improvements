@@ -1,4 +1,4 @@
-// gcc -Wall -std=c11 ./strerror_check.c -o strerror_check
+// gcc -Wall -std=c11 ./strsignal_check.c -o strsignal_check
 #define _GNU_SOURCE
 #include <time.h>
 #include <errno.h>
@@ -11,25 +11,24 @@
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void* thread_func(void* arg) {
-    int errnum = *((int*)arg);
-    // printf("Thread %d: %s\n", errnum, strerror(errnum));
-    const char *msg = strerror(errnum);
+    int signum = *((int*)arg);
+    const char *msg = strsignal(signum);
 
     pthread_mutex_lock(&mutex);
-    printf("Thread %d: %s\n", errnum, msg);
+    printf("Thread %d: %s\n", signum, msg);
     pthread_mutex_unlock(&mutex);
     return NULL;
 }
 
 int main() {
     pthread_t threads[2];
-    int errnums[2] = {107, 109};
+    int signums[2] = {71, 72};
 
     pthread_mutex_lock(&mutex);
 
     // Create two threads
     for (int i = 0; i < 2; i++) {
-        pthread_create(&threads[i], NULL, thread_func, &errnums[i]);
+        pthread_create(&threads[i], NULL, thread_func, &signums[i]);
     }
 
     // Sleep
