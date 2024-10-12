@@ -1,6 +1,6 @@
 CC := gcc
 CFLAGS += -std=c11 -Wall
-CFLAGS += -D_GNU_SOURCE -DTEST_STRSIGNAL -DHAS_SYS_SIGLIST
+CFLAGS += -D_GNU_SOURCE -DTEST_STRSIGNAL
 CFLAGS += -g -fsanitize=address -pthread
 
 TEST_TARGETS = strsignal_test strsignal_race_test strerror_test strerrorname_test
