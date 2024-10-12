@@ -22,6 +22,12 @@
 
 If Non-GNU, POSIX.1 2001 only... put a lock around strerror?
 
+
+| C Library Function | musl Support         |
+| ------------------ | -------------------- |
+| `strerror` MT-Safe | Since the beginning! |
+
+
 Preferability of Solutions
 1. If glibc >= 2.32. Directly use `strerror()`
 2. If `__STDC_LIB_EXT1__` is defined, use `strerror_s()`
@@ -43,7 +49,7 @@ Preferability of Solutions
  - https://man7.org/linux/man-pages/man3/printf.3.html
  - https://en.cppreference.com/w/c/string/byte/strerror
  - https://github.com/tavianator/bfs/blob/c1ac8a73589f9d27704e6bd8f99d0c42fac2100f/src/bfstd.c#L329
-
+ - https://elixir.bootlin.com/musl/v1.0.0/source/src/errno/strerror.c
 
 ## strsignal
 
