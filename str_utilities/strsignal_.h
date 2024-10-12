@@ -51,11 +51,16 @@
 #endif /* _GNU_SOURCE */
 
 /* sys_siglist defined for glibc < 2.32 */
-#if !(__GLIBC__ >= 2 && __GLIBC_MINOR__ >= 32)
+#if defined(__GLIBC__) && !(__GLIBC__ >= 2 && __GLIBC_MINOR__ >= 32)
 #ifndef HAS_SYS_SIGLIST
 #define HAS_SYS_SIGLIST 1
 #endif
-#endif /* < glibc 2.32 */
+#elif __APPLE__
+/* sys_siglist defined for MacOS since at least Mac OS X 10.2 */
+#ifndef HAS_SYS_SIGLIST
+#define HAS_SYS_SIGLIST 1
+#endif
+#endif
 
 // If HAS_STRSIGNAL_MT_SAFE, just link to the strsignal function directly.
 #if HAS_STRSIGNAL_MT_SAFE
