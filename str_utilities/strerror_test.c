@@ -8,7 +8,7 @@
 #pragma message "GLIBC " STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
 #endif /* __GLIBC__ */
 #ifdef __MUSL__
-#pragma message "MUSL " STR(__MUSL_VER_MAJOR__) "." STR(__MUSL_VER_MINOR__)
+#pragma message "MUSL"
 #endif /* __MUSL__ */
 #pragma message "__STDC_WANT_LIB_EXT1__" STR(__STDC_WANT_LIB_EXT1__)
 
