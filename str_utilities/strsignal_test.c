@@ -29,7 +29,7 @@
 
 // Output Formatting
 #define ROWS 75
-#define COLUMNS 25
+#define COLUMNS 30
 
 struct test_func test_funcs[] = {
 #if HAS_SIGDESCR_NP

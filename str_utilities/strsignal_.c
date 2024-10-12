@@ -13,8 +13,8 @@
 #define TEST_LINKAGE inline
 #endif /* TEST_STRSIGNAL */
 
-// Longest EN error message on linux 24 characters.
-#define SIGBUF_LEN 25
+// Longest strsignal message on BSD "Filesize limit exceeded: 25"
+#define SIGBUF_LEN 30
 #define SIGBUF_UNKNOWN_LEN 19 /* "Unknown signal ###" */
 
 #if HAS_SIGDESCR_NP
