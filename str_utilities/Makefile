@@ -5,7 +5,7 @@ CFLAGS += -D_GNU_SOURCE -DTEST_STR_UTILS
 
 # musl makes a point of not having a test macro
 # If we know it is musl, we can optimize the code, so make a macro exist.
-ifneq ("$(shell sh -c 'ldd 2>&1 | grep musl')",)
+ifneq ($(shell sh -c 'ldd 2>&1 | grep musl'),)
 CFLAGS += -D__MUSL__
 endif
 
