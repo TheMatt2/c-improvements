@@ -64,7 +64,7 @@
 
 // If HAS_STRSIGNAL_MT_SAFE, just link to the strsignal function directly.
 #if HAS_STRSIGNAL_MT_SAFE
-#define strsignal_(signum) strsignal(signum)
+#define strsignal_ strsignal
 #else
 NO_DISCARD const char* strsignal_(int signum);
 #endif /* HAS_STRSIGNAL_MT_SAFE */

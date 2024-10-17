@@ -32,6 +32,7 @@
 #define COLUMNS 30
 
 struct test_func test_funcs[] = {
+    {"strsignal_", (const char *(*)(int)) strsignal_},
 #if HAS_SIGDESCR_NP
     {"strsignal_sigdescr", strsignal_sigdescr},
 #endif /* HAS_SIGDESCR_NP */

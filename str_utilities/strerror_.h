@@ -51,7 +51,7 @@
 
 #if HAS_STRERROR_MT_SAFE
 // Just call strerror() when safe.
-#define strerror_(errnum) strerror(errnum)
+#define strerror_ strerror
 #else
 NO_DISCARD const char* strerror_(int errnum);
 #endif /* HAS_STRERROR_MT_SAFE */

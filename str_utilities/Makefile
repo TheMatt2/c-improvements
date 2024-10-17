@@ -12,8 +12,8 @@ endif
 TEST_TARGETS = strsignal_test strsignal_race_test strerror_test strerrorname_test
 
 # Disable implicit rules
-
 .SUFFIXES:
+
 .PHONY:
 all: $(TEST_TARGETS)
 
