@@ -1,17 +1,12 @@
 #include "strsignal_.h"
 #include "str_common.h"
 
+// If strsignal is safe, no need to define anything hear.
+#if !HAS_STRSIGNAL_MT_SAFE || defined(TEST_STR_UTILS)
 #include <stdio.h> // snprintf
 #include <string.h>
 #include <signal.h>
 
-
-#ifndef TEST_STR_UTILS
-// Allow specific functions to be linkable only if test macro is set.
-#define TEST_LINKAGE static inline
-#else
-#define TEST_LINKAGE
-#endif /* TEST_STR_UTILS */
 
 // Longest strsignal message on BSD "Filesize limit exceeded: 25"
 #define SIGBUF_LEN 30
@@ -20,7 +15,7 @@
 #if HAS_SIGDESCR_NP
 // sigdescr_np Solution.
 // Preferred due to built in thread safe
-TEST_LINKAGE const char* strsignal_sigdescr(int signum)
+LOCAL_LINKAGE const char* strsignal_sigdescr(int signum)
 {
     static thread_local char sigbuf[SIGBUF_UNKNOWN_LEN] = {0};
     // Call sigdescr_np() to get signal string
@@ -39,7 +34,7 @@ TEST_LINKAGE const char* strsignal_sigdescr(int signum)
 #include <pthread.h>
 
 
-TEST_LINKAGE const char* strsignal_posix(int signum)
+LOCAL_LINKAGE const char* strsignal_posix(int signum)
 {
     // Thread local buffer for signal string.
     static thread_local char sigbuf[SIGBUF_LEN] = {0};
@@ -68,7 +63,7 @@ extern const char * const sys_siglist[];
 #endif /* Legacy glibc sys_siglist for testing purposes. */
 // GLIBC fallback solution. Used if strsignal() is not available
 // at default source, but sys_siglist is.
-TEST_LINKAGE const char* strsignal_sys_siglist(int signum)
+LOCAL_LINKAGE const char* strsignal_sys_siglist(int signum)
 {
     static thread_local char sigbuf[SIGBUF_UNKNOWN_LEN] = {0};
     // Call sigdescr_np() to get signal string
@@ -86,7 +81,7 @@ TEST_LINKAGE const char* strsignal_sys_siglist(int signum)
 }
 #endif
 
-TEST_LINKAGE const char* strsignal_hardcode(int signum)
+LOCAL_LINKAGE const char* strsignal_hardcode(int signum)
 {
     // ISO C says signal identifiers a MACROS, so they can be individually tested for
     // and enabled.
@@ -193,9 +188,20 @@ TEST_LINKAGE const char* strsignal_hardcode(int signum)
 }
 
 #if !HAS_STRSIGNAL_MT_SAFE
-// If strsignal is safe, no need to define anything hear.
 const char* strsignal_(int signum)
 {
+    // Void reference to suppress unused warnings.
+#if HAS_SIGDESCR_NP
+    (void) strsignal_sigdescr;
+#endif
+#if HAS_STRSIGNAL
+    (void) strsignal_posix;
+#endif
+#if HAS_SYS_SIGLIST
+    (void) strsignal_sys_siglist;
+#endif
+    (void) strsignal_hardcode;
+
 #if HAS_SIGDESCR_NP
     return strsignal_sigdescr(signum);
 #elif HAS_STRSIGNAL
@@ -206,4 +212,5 @@ const char* strsignal_(int signum)
     return strsignal_hardcode(signum);
 #endif
 }
+#endif /* HAS_STRSIGNAL_MT_SAFE */
 #endif /* HAS_STRSIGNAL_MT_SAFE */

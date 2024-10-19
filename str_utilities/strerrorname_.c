@@ -5,13 +5,6 @@
 #include <stdio.h>
 
 
-#ifndef TEST_STR_UTILS
-// Allow specific functions to be linkable only if test macro is set.
-#define TEST_LINKAGE static
-#else
-#define TEST_LINKAGE /* nothing */
-#endif /* TEST_STR_UTILS */
-
 // Longest errno name is ENOTRECOVERABLE, EPROTONOSUPPORT, and ESOCKTNOSUPPORT.
 #define ERRBUF_LEN 16
 // For unknown errno name, just print the number (only concerned about 3 digits).
@@ -19,7 +12,7 @@
 
 #if HAS_STRERRORNAME_NP
 // Use strerrorname_np() to get error name.
-TEST_LINKAGE const char* strerrorname_gnu_np(int errnum)
+LOCAL_LINKAGE const char* strerrorname_gnu_np(int errnum)
 {
     // Thread local buffer for errors.
     static thread_local char errbuf[ERRBUF_LEN] = {0};
@@ -41,7 +34,7 @@ TEST_LINKAGE const char* strerrorname_gnu_np(int errnum)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wformat"
 #endif /* __GNUC__ */
-TEST_LINKAGE const char* strerrorname_printf_m(int errnum)
+LOCAL_LINKAGE const char* strerrorname_printf_m(int errnum)
 {
     // Thread local buffer for errors.
     static thread_local char errbuf[ERRBUF_LEN] = {0};
@@ -542,7 +535,7 @@ static const char* errnamelist[] = {
 #define ERRNAMELIST_LEN ARRAY_SIZE(errnamelist)
 
 // Hardcode solution
-TEST_LINKAGE const char* strerrorname_hardcode(int errnum)
+LOCAL_LINKAGE const char* strerrorname_hardcode(int errnum)
 {
     // There is no C standard way to get the acronym for the errno
     // errors. However, these are defined by ISO C as macros, so they
@@ -562,6 +555,15 @@ TEST_LINKAGE const char* strerrorname_hardcode(int errnum)
 
 const char* strerrorname_(int errnum)
 {
+    // Void reference to suppress unused warnings.
+#if HAS_STRERRORNAME_NP
+    (void) strerrorname_gnu_np;
+#endif
+#if HAS_PRINTF_M
+    (void) strerrorname_printf_m;
+#endif
+    (void) strerrorname_hardcode;
+
 #if HAS_STRERRORNAME_NP
     return strerrorname_gnu_np(errnum);
 #elif HAS_PRINTF_M

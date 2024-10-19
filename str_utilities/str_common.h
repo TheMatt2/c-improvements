@@ -25,3 +25,10 @@
 // C23 changes thread_local to be a keyword
 #define thread_local _Thread_local
 #endif
+
+#ifndef TEST_STR_UTILS
+// Allow specific functions to be linkable only if test macro is set.
+#define LOCAL_LINKAGE static
+#else
+#define LOCAL_LINKAGE /* nothing */
+#endif /* TEST_STR_UTILS */

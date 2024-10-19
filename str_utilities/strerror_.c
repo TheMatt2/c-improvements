@@ -2,25 +2,20 @@
 #include "strerror_.h"
 #include "str_common.h"
 
+// If strerror is safe, no need to define anything hear.
+#if !HAS_STRERROR_MT_SAFE || defined(TEST_STR_UTILS)
 #include <errno.h>
 #include <stdio.h>
 #include <string.h>
 #include <pthread.h>
 
 
-#ifndef TEST_STR_UTILS
-// Allow specific functions to be linkable only if test macro is set.
-#define TEST_LINKAGE static
-#else
-#define TEST_LINKAGE /* nothing */
-#endif /* TEST_STR_UTILS */
-
 // Longest EN error message on linux is EILSEQ is 49 characters + null.
 #define ERRBUF_LEN 50
 
 #if HAS_STRERROR_S
 // Use strerror_s() to print error message.
-TEST_LINKAGE const char* strerror_s_safe(int errnum)
+LOCAL_LINKAGE const char* strerror_s_safe(int errnum)
 {
     // Thread local buffer for errors.
     static thread_local char errbuf[ERRBUF_LEN] = {0};
@@ -37,7 +32,7 @@ TEST_LINKAGE const char* strerror_s_safe(int errnum)
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wformat"
 #endif /* __GNUC__ */
-TEST_LINKAGE const char* strerror_printf_m(int errnum)
+LOCAL_LINKAGE const char* strerror_printf_m(int errnum)
 {
     // Thread local buffer for errors.
     static thread_local char errbuf[ERRBUF_LEN] = {0};
@@ -54,7 +49,7 @@ TEST_LINKAGE const char* strerror_printf_m(int errnum)
 #endif /* HAS_PRINTF_M */
 
 // POSIX General Solution.
-TEST_LINKAGE const char* strerror_posix(int errnum)
+LOCAL_LINKAGE const char* strerror_posix(int errnum)
 {
     // Thread local buffer for errors.
     static thread_local char errbuf[ERRBUF_LEN] = {0};
@@ -70,9 +65,17 @@ TEST_LINKAGE const char* strerror_posix(int errnum)
 }
 
 #if !HAS_STRERROR_MT_SAFE
-// If strerror is safe, no need to define anything hear.
 const char* strerror_(int errnum)
 {
+    // Void reference to suppress unused warnings.
+#if HAS_STRERROR_S
+    (void) strerror_s_safe;
+#endif
+#if HAS_PRINTF_M
+    (void) strerror_printf_m;
+#endif
+    (void) strerror_posix;
+
 #if HAS_STRERROR_S
     return strerror_s_safe(errnum);
 #elif HAS_PRINTF_M
@@ -81,4 +84,5 @@ const char* strerror_(int errnum)
     return strerror_posix(errnum);
 #endif
 }
+#endif /* HAS_STRERROR_MT_SAFE */
 #endif /* HAS_STRERROR_MT_SAFE */
