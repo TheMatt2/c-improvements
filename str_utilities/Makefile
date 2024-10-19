@@ -15,7 +15,7 @@ TEST_TARGETS = strsignal_test strsignal_race_test strerror_test strerrorname_tes
 .SUFFIXES:
 
 .PHONY:
-all: $(TEST_TARGETS)
+all: $(TEST_TARGETS) main
 
 $(TEST_TARGETS): % : strsignal_.o strerror_.o strerrorname_.o test_common.o %.o
 	$(CC) $(CFLAGS) $^ -o $@
@@ -23,10 +23,13 @@ $(TEST_TARGETS): % : strsignal_.o strerror_.o strerrorname_.o test_common.o %.o
 %.o : %.c
 	$(CC) -c $(CFLAGS) $^
 
+main: % : strsignal_.o strerror_.o strerrorname_.o test_common.o %.o
+	$(CC) $(CFLAGS) $^ -o $@
+
 .PHONY: tests
 tests: $(TEST_TARGETS)
 	@for test in $^; do echo $$test && ./$$test; done
 
 .PHONY: clean
 clean:
-	rm -f *.o $(TEST_TARGETS)
+	rm -f *.o $(TEST_TARGETS) main
