@@ -1,7 +1,7 @@
 
 // strerror_.h
-#ifndef STRERROR_H
-#define STRERROR_H
+#ifndef STRERRORNAME_H
+#define STRERRORNAME_H
 // Include solely to get version macros.
 #include <string.h>
 
@@ -29,4 +29,4 @@
 
 NO_DISCARD const char* strerrorname_(int errnum);
 
-#endif /* STRERROR_H */
+#endif /* STRERRORNAME_H */
