@@ -6,7 +6,8 @@ Goals of the functions exposed by these common string functions.
 2. Don't care about POSIX locale support
 3. "Successful call to strerror() or strerror_l() shall leave errno unchanged..." (man strerror)
 4. C11. At least glibc 2.15
-5. Ideally don't need to hardcode all possible value.
+5. Assume POSIX 2008 funcions are available
+6. Ideally don't need to hardcode all possible value.
 
 ## strerror
 
@@ -72,7 +73,7 @@ If `sigdescr_np()` is availiable, `strsignal()` defacto MT-Safe is also availabl
 So no reason to use `sigdescr_np()`.
 
 Based on https://stackoverflow.com/a/1719492, assuming `strsignal()` has
-been in MacOSX since at last 10.6, which cooresponds to the year of the post.
+been in Mac OSX since at last 10.6, which cooresponds to the year of the post.
 
 Preferability of Solutions
 

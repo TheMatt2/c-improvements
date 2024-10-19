@@ -17,19 +17,7 @@ static const char* (*function_under_test)(int);
 static bool success = true;
 
 struct test_func test_funcs[] = {
-#if HAS_STRSIGNAL
-    {"strsignal", (void *) strsignal},
-#endif /* HAS_STRSIGNAL */
-#if HAS_SIGDESCR_NP
-    {"strsignal_sigdescr", strsignal_sigdescr},
-#endif /* HAS_SIGDESCR_NP */
-#if HAS_STRSIGNAL
     {"strsignal_posix", strsignal_posix},
-#endif /* HAS_STRSIGNAL */
-#if HAS_SYS_SIGLIST
-    {"strsignal_sys_siglist", strsignal_sys_siglist},
-#endif /* HAS_SYS_SIGLIST */
-    {"strsignal_hardcode", strsignal_hardcode}
 };
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
