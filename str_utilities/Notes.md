@@ -1,13 +1,14 @@
-## Common String Library
+# Common String Library Notes
 
-1. Works on everything
-2. Don't care about locale support
+Goals of the functions exposed by these common string functions.
+
+1. Works on Linux, MacOS, Windows, Docker Alpine (Musl)
+2. Don't care about POSIX locale support
 3. "Successful call to strerror() or strerror_l() shall leave errno unchanged..." (man strerror)
 4. C11. At least glibc 2.15
 5. Ideally don't need to hardcode all possible value.
-6. Ideally don't need explicit buffer.
 
-### strerror
+## strerror
 
 | C Library Function       | glibc Support                          | Requirements                                                      |
 | ------------------------ | -------------------------------------- | ----------------------------------------------------------------- |
