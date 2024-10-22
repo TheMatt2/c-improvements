@@ -1,7 +1,3 @@
 main
-strerror_check
-strerror_test
-strerrorname_test
-strsignal_check
-strsignal_race_test
-strsignal_test
+*_test
+*_check
