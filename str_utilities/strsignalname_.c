@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 
-#define SIGNAME_LEN 16
+#define SIGNAME_LEN 10
 
 #if HAS_SIGABBREV_NP
 LOCAL_LINKAGE const char* strsignalname_sigabbrev_np(int signum) {
