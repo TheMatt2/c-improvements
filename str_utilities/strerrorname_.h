@@ -1,5 +1,3 @@
-
-// strerror_.h
 #ifndef STRERRORNAME_H
 #define STRERRORNAME_H
 // Include solely to get version macros.

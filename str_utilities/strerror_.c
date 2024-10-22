@@ -58,8 +58,14 @@ LOCAL_LINKAGE const char* strerror_posix(int errnum)
     pthread_mutex_lock(&mutex);
     // Call strerror() to get error status
     buf = strerror(errnum);
-    // Copy to a thread specific buffer. Always leave null terminator.
-    buf = strncpy(errbuf, buf, sizeof(errbuf) - 1);
+    if (buf != NULL) {
+        // Copy to a thread specific buffer. Always leave null terminator.
+        buf = strncpy(errbuf, buf, sizeof(errbuf) - 1);
+    } else {
+        // man strerror
+        // "On some systems (but not on Linux), NULL may instead be returned."
+        snprintf(errbuf, sizeof(errbuf), "Unknown error %d", errnum);
+    }
     pthread_mutex_unlock(&mutex);
     return buf;
 }
