@@ -1,5 +1,5 @@
-#ifndef STRERRORNAME_H
-#define STRERRORNAME_H
+#ifndef STRSIGNALNAME_H
+#define STRSIGNALNAME_H
 // Include solely to get version macros.
 #include <signal.h>
 
@@ -24,4 +24,4 @@
 
 NO_DISCARD const char* strsignalname_(int signum);
 
-#endif /* STRERRORNAME_H */
+#endif /* STRSIGNALNAME_H */
