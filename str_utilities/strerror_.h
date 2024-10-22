@@ -1,5 +1,4 @@
 
-// strerror_.h
 #ifndef STRERROR_H
 #define STRERROR_H
 
@@ -55,12 +54,4 @@
 #else
 NO_DISCARD const char* strerror_(int errnum);
 #endif /* HAS_STRERROR_MT_SAFE */
-
-#ifdef TEST_STRSIGNAL
-#if HAS_PRINTF_M
-const char* strerror_printf_m(int errnum);
-#endif /* HAS_PRINTF_M */
-const char* strerror_posix(int errnum);
-#endif /* TEST_STRSIGNAL */
-
 #endif /* STRERROR_H */

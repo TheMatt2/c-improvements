@@ -68,18 +68,4 @@
 #else
 NO_DISCARD const char* strsignal_(int signum);
 #endif /* HAS_STRSIGNAL_MT_SAFE */
-
-#ifdef TEST_STRSIGNAL
-#if HAS_SIGDESCR_NP
-const char* strsignal_sigdescr(int signum);
-#endif /* HAS_SIGDESCR_NP */
-#if HAS_STRSIGNAL
-const char* strsignal_posix(int signum);
-#endif /* HAS_STRSIGNAL */
-#if HAS_SYS_SIGLIST
-const char* strsignal_sys_siglist(int signum);
-#endif /* HAS_SYS_SIGLIST */
-const char* strsignal_hardcode(int signum);
-#endif /* TEST_STRSIGNAL */
-
 #endif /* STRSIGNAL_H */

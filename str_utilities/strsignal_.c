@@ -6,12 +6,12 @@
 #include <signal.h>
 
 
-#ifndef TEST_STRSIGNAL
+#ifndef TEST_STR_UTILS
 // Allow specific functions to be linkable only if test macro is set.
 #define TEST_LINKAGE static inline
 #else
-#define TEST_LINKAGE inline
-#endif /* TEST_STRSIGNAL */
+#define TEST_LINKAGE
+#endif /* TEST_STR_UTILS */
 
 // Longest strsignal message on BSD "Filesize limit exceeded: 25"
 #define SIGBUF_LEN 30
@@ -55,7 +55,7 @@ TEST_LINKAGE const char* strsignal_posix(int signum)
 #endif
 
 #if HAS_SYS_SIGLIST
-#if defined(TEST_STRSIGNAL) && (__GLIBC__ >= 2 && __GLIBC_MINOR__ >= 32)
+#if defined(TEST_STR_UTILS) && (__GLIBC__ >= 2 && __GLIBC_MINOR__ >= 32)
 // For test purposes, link against sys_siglist, even though it is
 // removed from newer versions of glibc. Assembly trickery to make
 // this work.

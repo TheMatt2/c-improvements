@@ -1,6 +1,6 @@
 CC := gcc
 CFLAGS += -std=c11 -Wall -Os
-CFLAGS += -D_GNU_SOURCE -DTEST_STRSIGNAL
+CFLAGS += -D_GNU_SOURCE -DTEST_STR_UTILS
 # CFLAGS += -g -fsanitize=address -pthread
 
 # musl makes a point of not having a test macro

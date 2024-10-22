@@ -1,5 +1,5 @@
 #include "strsignal_.h"
-#include "str_common.h"
+#include "test_common.h"
 
 #include <time.h> // nanosleep
 #include <errno.h>
@@ -10,10 +10,6 @@
 #include <pthread.h>
 #include <stdbool.h>
 
-struct test_func {
-    char *name;
-    const char* (*func)(int);
-};
 
 // Reference to test in function calls
 static const char* (*function_under_test)(int);

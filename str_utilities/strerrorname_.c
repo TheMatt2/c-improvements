@@ -5,12 +5,12 @@
 #include <stdio.h>
 
 
-#ifndef TEST_STRSIGNAL
+#ifndef TEST_STR_UTILS
 // Allow specific functions to be linkable only if test macro is set.
 #define TEST_LINKAGE static
 #else
 #define TEST_LINKAGE /* nothing */
-#endif /* TEST_STRSIGNAL */
+#endif /* TEST_STR_UTILS */
 
 // Longest errno name is ENOTRECOVERABLE, EPROTONOSUPPORT, and ESOCKTNOSUPPORT.
 #define ERRBUF_LEN 16
