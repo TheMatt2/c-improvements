@@ -6,7 +6,13 @@
 #include <string.h>
 
 
+#if defined(SIG2STR_MAX) && SIG2STR_MAX + 3 > 10
+// If SIG2STR_MAX is present, use for buffer size.
+// Add 3 to prepend a SIG prefix.s
+#define SIGNAME_LEN (SIG2STR_MAX + 3)
+#else
 #define SIGNAME_LEN 10
+#endif
 
 #if HAS_SIGABBREV_NP
 LOCAL_LINKAGE const char* strsignalname_sigabbrev_np(int signum) {
@@ -22,6 +28,23 @@ LOCAL_LINKAGE const char* strsignalname_sigabbrev_np(int signum) {
     return sigbuf;
 }
 #endif /* HAS_SIGABBREV_NP */
+
+#if HAS_SIG2STR
+LOCAL_LINKAGE const char* strsignalname_sig2str(int signum) {
+    // Thread local buffer for signal name.
+    // Add 3 to add "SIG" on the front
+    static thread_local char sigbuf[SIGNAME_LEN] = {0};
+    // Get signal name
+    if (sigstr(signum, &sigbuf[3]) == 0) {
+        sigbuf[0] = 'S';
+        sigbuf[1] = 'I';
+        sigbuf[2] = 'G';
+    } else {
+        snprintf(sigbuf, sizeof(sigbuf), "Signal %d", signum);
+    }
+    return sigbuf;
+}
+#endif /* HAS_SIG2STR */
 
 #if HAS_SYS_SIGNAME
 static inline void uppercase(char *str, size_t len)
@@ -51,6 +74,31 @@ LOCAL_LINKAGE const char* strsignalname_sys_signame(int signum) {
     return sigbuf;
 }
 #endif /* HAS_SYS_SIGNAME */
+
+#if HAS_SYS_SIGABBREV
+// The only way to access sys_sigabbrev, is to use an assembly
+// directive to request it.
+#define SYMVER(s) __asm__(".symver " s)
+SYMVER("sys_sigabbrev,sys_sigabbrev@GLIBC_2.3.3");
+extern const char *const sys_sigabbrev[];
+
+LOCAL_LINKAGE const char* strsignalname_sys_sigabbrev(int signum) {
+    // Thread local buffer for signal name.
+    static thread_local char sigbuf[SIGNAME_LEN] = {0};
+    const char *buf = NULL;
+    // Check if signum is in array. Assumes 0 is not a valid signal.
+    if (0 < signum && signum < NSIG) {
+        buf = sys_sigabbrev[signum];
+    }
+    // Check if signum name is in list.
+    if (buf != NULL) {
+        snprintf(sigbuf, sizeof(sigbuf), "SIG%s", buf);
+    } else {
+        snprintf(sigbuf, sizeof(sigbuf), "Signal %d", signum);
+    }
+    return sigbuf;
+}
+#endif /* HAS_SYS_SIGABBREV */
 
 // Hardcode solution
 static const char *sysnamelist[] = {
@@ -182,13 +230,21 @@ const char* strsignalname_(int signum) {
 #if HAS_SIGABBREV_NP
     (void) strsignalname_sigabbrev_np;
 #endif
+#if HAS_SIG2STR
+    (void) strsignalname_sig2str;
+#endif
 #if HAS_SYS_SIGNAME
     (void) strsignalname_sys_signame;
+#endif
+#if HAS_SYS_SIGABBREV
+    (void) strsignalname_sys_sigabbrev;
 #endif
     (void) strsignalname_hardcode;
 
 #if HAS_SIGABBREV_NP
     return strsignalname_sigabbrev_np(signum);
+#elif HAS_SIG2STR
+    return strsignalname_sig2str(signum);
 #elif HAS_SYS_SIGNAME
     return strsignalname_sys_signame(signum);
 #else

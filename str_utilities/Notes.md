@@ -138,9 +138,22 @@ ETIMEDOUT, ETOOMANYREFS, ETXTBSY, EUCLEAN, EUNATCH, EUSERS, EWOULDBLOCK, EXDEV, 
 
 ## strsignalname
 
+Get the abbreviation for a signal, such as SIGSEGV.
+
+| C Library Function | glibc Support | Requirements                                                           |
+| ------------------ | ------------- | ---------------------------------------------------------------------- |
+| `sig2str()`        | -             | POSIX 2024!                                                            |
+| `sys_sigabbrev`    | 2.1.91        | Requires _direct linking_. glibc defines this, but does not expose it! |
+| `sigabbrev_np`     | 2.32          | Requires `_GNU_SOURCE`                                                 |
+
 ### BSD Signal List (MacOS 12)
 
 SIGHUP, SIGINT, SIGQUIT, SIGILL, SIGTRAP, SIGABRT, SIGEMT, SIGFPE, SIGKILL,
 SIGBUS, SIGSEGV, SIGSYS, SIGPIPE, SIGALRM, SIGTERM, SIGURG, SIGSTOP, SIGTSTP,
 SIGCONT, SIGCHLD, SIGTTIN, SIGTTOU, SIGIO, SIGXCPU, SIGXFSZ, SIGVTALRM,
 SIGPROF, SIGWINCH, SIGINFO, SIGUSR1, SIGUSR2
+
+### References
+
+ - https://www.austingroupbugs.net/view.php?id=1138
+ - https://github.com/coreutils/gnulib/commit/94add22ac9999af0e521f627d68cc1459589c758

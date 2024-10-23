@@ -11,9 +11,15 @@ struct test_func test_funcs[] = {
 #if HAS_SIGABBREV_NP
     {"strsignalname_sigabbrev_np", strsignalname_sigabbrev_np},
 #endif /* HAS_SIGABBREV_NP */
+#if HAS_SIG2STR
+    {"strsignalname_sig2str", strsignalname_sig2str},
+#endif /* HAS_SIG2STR */
 #if HAS_SYS_SIGNAME
     {"strsignalname_sys_signame", strsignalname_sys_signame},
 #endif /* HAS_STRERRORNAME_NP */
+#if HAS_SYS_SIGABBREV
+    {"strsignalname_sys_sigabbrev", strsignalname_sys_sigabbrev},
+#endif /* HAS_SYS_SIGABBREV */
     {"strsignalname_hardcode", strsignalname_hardcode}
 };
 

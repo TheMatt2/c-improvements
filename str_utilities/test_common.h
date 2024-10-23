@@ -38,7 +38,9 @@ const char* strerrorname_printf_m(int errnum);
 const char* strerrorname_hardcode(int errnum);
 
 const char* strsignalname_sigabbrev_np(int signum);
+const char* strsignalname_sig2str(int signum);
 const char* strsignalname_sys_signame(int signum);
+const char* strsignalname_sys_sigabbrev(int signum);
 const char* strsignalname_hardcode(int signum);
 
 struct test_func {
