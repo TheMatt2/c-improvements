@@ -5,7 +5,7 @@
 
 // If strsignal is safe, no need to define anything hear.
 #if !HAS_STRSIGNAL_MT_SAFE || defined(TEST_STR_UTILS)
-#include <stdio.h> // snprintf
+#include <stdio.h>
 #include <string.h>
 #include <signal.h>
 #include <pthread.h>

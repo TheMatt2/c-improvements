@@ -1,5 +1,8 @@
 // gcc -Wall -std=c11 ./strerror_check.c -o strerror_check
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
+
 #include <time.h>
 #include <errno.h>
 #include <stdio.h>

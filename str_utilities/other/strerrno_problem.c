@@ -1,7 +1,9 @@
 // http://www.club.cc.cmu.edu/~cmccabe/blog_strerror.html
 // gcc -Wall -std=c11 -g ./strerrno_problem.c
 // #define _GNU_SOURCE
+#ifndef _POSIX_C_SOURCE
 #define _POSIX_C_SOURCE 200812L
+#endif
 
 #include <stdio.h>
 #include <errno.h>

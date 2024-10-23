@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS += -std=c11 -Wall -Os -D_GNU_SOURCE
+CFLAGS += -std=c11 -Wall -Os -D_GNU_SOURCE -DTEST_STR_UTILS
 # CFLAGS += -g -fsanitize=address -pthread
 
 # musl makes a point of not having a test macro
@@ -20,7 +20,7 @@ STR_UTILS := strsignal_.o strerror_.o strerrorname_.o strsignalname_.o test_comm
 all: $(TEST_TARGETS) main
 
 $(TEST_TARGETS): % : $(STR_UTILS) %.o
-	$(CC) $(CFLAGS) -DTEST_STR_UTILS $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@
 
 %.o : %.c
 	$(CC) -c $(CFLAGS) $^

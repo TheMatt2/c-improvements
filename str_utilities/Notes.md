@@ -95,7 +95,7 @@ Preferability of Solutions
 | C Library Function  | glibc Support | Requirements                                    |
 | ------------------- | ------------- | ----------------------------------------------- |
 | `strerrorname_np()` | >= glibc 2.32 | Non-POSIX. GNU specific. Requires `_GNU_SOURCE` |
-| `printf("%#m")`     | >= glibc 2.35 | None                                            |
+| `printf("%#m")`     | >= glibc 2.35 | Non-POSIX. GNU specific.                        |
 
 Preferability of Solutions
 1. `strerrorname_np()`
@@ -135,3 +135,12 @@ ETIMEDOUT, ETOOMANYREFS, ETXTBSY, EUCLEAN, EUNATCH, EUSERS, EWOULDBLOCK, EXDEV, 
 ### References
 
 > man 3 `printf`: glibc 2.35 gives a meaning to the alternate form (#) of the m conversion specifier, that is %#m.
+
+## strsignalname
+
+### BSD Signal List (MacOS 12)
+
+SIGHUP, SIGINT, SIGQUIT, SIGILL, SIGTRAP, SIGABRT, SIGEMT, SIGFPE, SIGKILL,
+SIGBUS, SIGSEGV, SIGSYS, SIGPIPE, SIGALRM, SIGTERM, SIGURG, SIGSTOP, SIGTSTP,
+SIGCONT, SIGCHLD, SIGTTIN, SIGTTOU, SIGIO, SIGXCPU, SIGXFSZ, SIGVTALRM,
+SIGPROF, SIGWINCH, SIGINFO, SIGUSR1, SIGUSR2
