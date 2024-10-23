@@ -8,9 +8,13 @@
 #define COLUMNS 50
 
 struct test_func test_funcs[] = {
+#if HAS_STRERROR_MT_SAFE
+    {"strerror_mt_safe", strerror_},
+#endif
 #if HAS_STRERROR_S
     {"strerror_s_safe", strerror_s_safe},
-#elif HAS_PRINTF_M
+#endif
+#if HAS_PRINTF_M
     {"strerror_printf_m", strerror_printf_m},
 #endif
     {"strerror_posix", strerror_posix},

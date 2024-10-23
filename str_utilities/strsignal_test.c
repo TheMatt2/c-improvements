@@ -16,11 +16,14 @@
 #endif
 
 // Output Formatting
-#define ROWS 75
+#define ROWS NSIG
 #define COLUMNS 30
 
 struct test_func test_funcs[] = {
-    {"strsignal_posix", strsignal_posix},
+#if HAS_STRSIGNAL_MT_SAFE
+    {"strsignal_mt_safe", (void *) strsignal_},
+#endif
+    {"strsignal_posix", strsignal_posix}
 };
 
 size_t test_funcs_maxlen[ARRAY_SIZE(test_funcs)];

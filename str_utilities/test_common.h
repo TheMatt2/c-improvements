@@ -28,10 +28,7 @@ const char* strerror_s_safe(int errnum);
 const char* strerror_printf_m(int errnum);
 const char* strerror_posix(int errnum);
 
-const char* strsignal_sigdescr(int signum);
 const char* strsignal_posix(int signum);
-const char* strsignal_sys_siglist(int signum);
-const char* strsignal_hardcode(int signum);
 
 const char* strerrorname_gnu_np(int errnum);
 const char* strerrorname_printf_m(int errnum);
