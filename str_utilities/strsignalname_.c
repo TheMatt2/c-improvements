@@ -2,8 +2,8 @@
 #include "str_common.h"
 
 #include <ctype.h>
-#include <errno.h>
 #include <stdio.h>
+#include <string.h>
 
 
 #define SIGNAME_LEN 10
