@@ -1,6 +1,6 @@
 CC := gcc
-CFLAGS += -std=c11 -Wall -Os -D_GNU_SOURCE -DTEST_STR_UTILS
-# CFLAGS += -g -fsanitize=address -pthread
+CFLAGS += -std=c11 -pthread -Wall -Os -D_GNU_SOURCE -DTEST_STR_UTILS
+# CFLAGS += -g -fsanitize=address
 
 # musl makes a point of not having a test macro
 # If we know it is musl, we can optimize the code, so make a macro exist.
