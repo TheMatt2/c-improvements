@@ -17,6 +17,9 @@ struct test_func test_funcs[] = {
 #if HAS_PRINTF_M
     {"strerror_printf_m", strerror_printf_m},
 #endif
+#if HAS_STRERROR_R
+    {"strerror_r_xpg", strerror_r_xpg},
+#endif
     {"strerror_posix", strerror_posix},
 };
 

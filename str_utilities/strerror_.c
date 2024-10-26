@@ -1,3 +1,14 @@
+/*
+ * Despite strerror_r being a POSIX 2001 standard function, glibc offers
+ * a non-compliant version of strerror_r if _GNU_SOURCE is set.
+ *
+ * _POSIX_C_SOURCE can not meaningfully be unset, as some platforms also have
+ * _POSIX_SOURCE or _XOPEN_SOURCE that act as aliases, and this implementation
+ * can not assume it can predict all test macros. _GNU_SOURCE, on the other
+ * hand is specific to GNU Linux glibc, and there is no alternatives macros,
+ * so it is safe to undefine it make sure we get a POSIX compliant strerror_r.
+ */
+#undef _GNU_SOURCE
 #define __STDC_WANT_LIB_EXT1__ 1
 #include "strerror_.h"
 #include "str_common.h"
@@ -38,7 +49,6 @@ LOCAL_LINKAGE const char* strerror_printf_m(int errnum)
     static thread_local char errbuf[ERRBUF_LEN] = {0};
     int prev_errno = errno;
     errno = errnum;
-
     snprintf(errbuf, sizeof(errbuf), "%m");
     errno = prev_errno;
     return errbuf;
@@ -47,6 +57,18 @@ LOCAL_LINKAGE const char* strerror_printf_m(int errnum)
 #pragma GCC diagnostic pop
 #endif /* __GNUC__ */
 #endif /* HAS_PRINTF_M */
+
+#if HAS_STRERROR_R
+LOCAL_LINKAGE const char* strerror_r_xpg(int errnum)
+{
+    // Thread local buffer for errors.
+    static thread_local char errbuf[ERRBUF_LEN] = {0};
+    int prev_errno = errno;
+    strerror_r(errnum, errbuf, sizeof(errbuf));
+    errno = prev_errno;
+    return errbuf;
+}
+#endif /* HAS_STRERROR_R */
 
 // POSIX General Solution.
 LOCAL_LINKAGE const char* strerror_posix(int errnum)
@@ -86,9 +108,11 @@ const char* strerror_(int errnum)
     return strerror_s_safe(errnum);
 #elif HAS_PRINTF_M
     return strerror_printf_m(errnum);
+#elif HAS_STRERROR_R_XPG
+    return strerror_r_xpg(errnum);
 #else
     return strerror_posix(errnum);
 #endif
 }
 #endif /* HAS_STRERROR_MT_SAFE */
-#endif /* HAS_STRERROR_MT_SAFE */
+#endif /* !HAS_STRERROR_MT_SAFE || defined(TEST_STR_UTILS) */

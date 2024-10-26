@@ -11,26 +11,40 @@ Goals of the functions exposed by these common string functions.
 
 ## strerror
 
-| C Library Function       | glibc Support                          | Requirements                                                      |
-| ------------------------ | -------------------------------------- | ----------------------------------------------------------------- |
-| `strerror()`             | >= glibc 1.0? MT-safe >= 2.32          | POSIX still says it isn't thread safe.                            |
-| `char* strerror_r()` GNU | >= glibc 2.0                           | Requires `_GNU_SOURCE`                                            |
-| `int strerror_r()` XSI   | >= glibc 2.13                          | Requires `(_POSIX_C_SOURCE >= 200112L) && ! defined(_GNU_SOURCE)` |
-| `char* strerror_l()`     | >= glibc 2.6                           | POSIX.1-2008                                                      |
-| `strerrordesc_np()`      | >= glibc 2.32                          | Non-POSIX. GNU specific.                                          |
-| `sys_errlist[]`          | < glibc 2.32. Deprecated >= glibc 2.19 | Non-POSIX. GNU specific.                                          |
-| `printf("%m")`           | >= glibc 1.06                          | None                                                              |
-| `strerror_s()`           | None!                                  | C11 with `__STDC_WANT_LIB_EXT1__` and if extension is supported.  |
+| C Library Function       | glibc Support                          | Requirements                                                                       |
+| ------------------------ | -------------------------------------- | ---------------------------------------------------------------------------------- |
+| `strerror()`             | >= glibc 1.0? MT-safe >= 2.32          | POSIX still says it isn't thread safe.                                             |
+| `char* strerror_r()` GNU | >= glibc 2.0                           | Requires `_GNU_SOURCE`                                                             |
+| `int strerror_r()` XSI   | >= glibc 2.13                          | Requires `(_POSIX_C_SOURCE >= 200112L \|\| _XOPEN_SOURCE >= 600) && ! _GNU_SOURCE` |
+| `char* strerror_l()`     | >= glibc 2.6                           | POSIX.1-2008                                                                       |
+| `strerrordesc_np()`      | >= glibc 2.32                          | Non-POSIX. GNU specific.                                                           |
+| `sys_errlist[]`          | < glibc 2.32. Deprecated >= glibc 2.19 | Non-POSIX. GNU specific.                                                           |
+| `printf("%m")`           | >= glibc 1.06                          | Non-POSIX. GNU specific.                                                           |
+| `strerror_s()`           | None!                                  | C11 with `__STDC_WANT_LIB_EXT1__` and if extension is supported.                   |
 
 If Non-GNU, POSIX.1 2001 only... put a lock around strerror?
-
 
 | C Library Function | musl Support         |
 | ------------------ | -------------------- |
 | `strerror` MT-Safe | Since the beginning! |
 
+POSIX.1 2001 specifies that `strerror_r` may set errno on error, but no return value
+is specified. Meaning `strerror_r` may return 0, but sets errno.
+
+Both MacOS and BSD provide `strerror_r` without are feature macros.
+GNU Linux requires `_POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600` to provide
+`strerror_r`.
+
+Despite `strerror_r` being a POSIX 2001 standard function, glibc offers
+a non-compliant version of `strerror_r` if _GNU_SOURCE is set.
+`_POSIX_C_SOURCE` can not meaningfully be unset, as some platforms also have
+`_POSIX_SOURCE` or `_XOPEN_SOURCE` that act as aliases, and this implementation
+can not assume it can predict all test macros. `_GNU_SOURCE`, on the other
+hand is specific to GNU Linux glibc, and there is no alternatives macros,
+so it is safe to undefine it make sure we get a POSIX compliant `strerror_r`.
 
 Preferability of Solutions
+
 1. If glibc >= 2.32. Directly use `strerror()`
 2. If `__STDC_LIB_EXT1__` is defined, use `strerror_s()`
 3. If glibc < 2.32. `printf("%m")`
@@ -52,6 +66,7 @@ Preferability of Solutions
  - https://en.cppreference.com/w/c/string/byte/strerror
  - https://github.com/tavianator/bfs/blob/c1ac8a73589f9d27704e6bd8f99d0c42fac2100f/src/bfstd.c#L329
  - https://elixir.bootlin.com/musl/v1.0.0/source/src/errno/strerror.c
+ - https://linux.die.net/man/3/strerror
 
 ## strsignal
 

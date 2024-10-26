@@ -26,6 +26,7 @@
 // All internal methods that can activated
 const char* strerror_s_safe(int errnum);
 const char* strerror_printf_m(int errnum);
+const char* strerror_r_xpg(int errnum);
 const char* strerror_posix(int errnum);
 
 const char* strsignal_posix(int signum);

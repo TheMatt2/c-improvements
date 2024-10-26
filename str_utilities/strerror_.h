@@ -1,4 +1,3 @@
-
 #ifndef STRERROR_H
 #define STRERROR_H
 
@@ -26,6 +25,13 @@
 #endif
 #endif /* glibc >= 2.32 */
 
+/* strerror_s() is defined for C11 if __STDC_LIB_EXT1__ is set. */
+#ifdef __STDC_LIB_EXT1__
+#ifndef HAS_STRERROR_S
+#define HAS_STRERROR_S 1
+#endif
+#endif /* __STDC_LIB_EXT1__ */
+
 /* printf("%m") is defacto MT-safe for glibc >= 1.06 */
 #if __GLIBC__ >= 1 && __GLIBC_MINOR__ >= 6
 #ifndef HAS_PRINTF_M
@@ -33,12 +39,13 @@
 #endif
 #endif /* glibc >= 1.06 */
 
-/* strerror_s() is defined for C11 if __STDC_LIB_EXT1__ is set */
-#ifdef __STDC_LIB_EXT1__
-#ifndef HAS_STRERROR_S
-#define HAS_STRERROR_S 1
+// strerror_r() glibc >= 2.0, POSIX 2001, BSD, or MacOS.
+// GNU strerror_r() has a non-POSIX return value.
+#if defined(__BSD__) || defined(__APPLE__) || _POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE >= 600
+#ifndef HAS_STRERROR_R
+#define HAS_STRERROR_R 1
 #endif
-#endif /* __STDC_LIB_EXT1__ */
+#endif /* glibc >= 2.0 */
 
 #if __STDC_VERSION__ >= 202311L
 #define NO_DISCARD [[ nodiscard ]]
