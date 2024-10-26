@@ -5,6 +5,18 @@
 #include <string.h>
 
 
+// Show Feature Test Macros
+#pragma message "__STDC_WANT_LIB_EXT1__ " STR(__STDC_WANT_LIB_EXT1__)
+#ifdef __GLIBC__
+#pragma message "GLIBC " STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
+#endif /* __GLIBC__ */
+#ifdef __MUSL__
+#pragma message "MUSL"
+#endif /* __MUSL__ */
+#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
+#pragma message "MAC_OS_X_VERSION_MIN_REQUIRED " STR(__MAC_OS_X_VERSION_MIN_REQUIRED)
+#endif
+
 void print_header(struct test_table *test_table)
 {
     printf("###  ");

@@ -4,16 +4,6 @@
 
 #include <signal.h> // NSIG
 
-// Print libc version
-#ifdef __GLIBC__
-#pragma message "GLIBC " STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
-#endif
-#ifdef __MAC_OS_X_VERSION_MIN_REQUIRED
-#pragma message "MAC_OS_X_VERSION_MIN_REQUIRED " STR(__MAC_OS_X_VERSION_MIN_REQUIRED)
-#endif
-#ifdef HAS_STRSIGNAL_MT_SAFE
-#pragma message "HAS_STRSIGNAL_MT_SAFE " STR(HAS_STRSIGNAL_MT_SAFE)
-#endif
 
 // Output Formatting
 #define ROWS NSIG

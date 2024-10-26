@@ -11,17 +11,7 @@
 #include "str_common.h"
 
 #include <stddef.h>
-#include <stdbool.h>
 
-
-// Print GLIBC version
-#ifdef __GLIBC__
-#pragma message "GLIBC " STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
-#endif /* __GLIBC__ */
-#ifdef __MUSL__
-#pragma message "MUSL"
-#endif /* __MUSL__ */
-#pragma message "__STDC_WANT_LIB_EXT1__ " STR(__STDC_WANT_LIB_EXT1__)
 
 // All internal methods that can activated
 const char* strerror_s_safe(int errnum);

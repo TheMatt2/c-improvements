@@ -3,11 +3,6 @@
 #include "test_common.h"
 
 
-// Print GLIBC version
-#ifdef __GLIBC__
-#pragma message "GLIBC " STR(__GLIBC__) "." STR(__GLIBC_MINOR__)
-#endif /* __GLIBC__ */
-
 // Output Formatting
 #define ROWS 140
 #define COLUMNS 25
