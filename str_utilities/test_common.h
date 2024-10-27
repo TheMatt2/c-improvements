@@ -13,7 +13,7 @@
 #include <stddef.h>
 
 
-// All internal methods that can activated
+// All internal methods that can be activated
 const char* strerror_s_safe(int errnum);
 const char* strerror_printf_m(int errnum);
 const char* strerror_r_xpg(int errnum);

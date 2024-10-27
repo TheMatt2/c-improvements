@@ -7,8 +7,14 @@
  * can not assume it can predict all test macros. _GNU_SOURCE, on the other
  * hand is specific to GNU Linux glibc, and there is no alternatives macros,
  * so it is safe to undefine it make sure we get a POSIX compliant strerror_r.
+ *
+ * Set _DEFAULT_SOURCE to make sure POSIX strerror_r is available.
  */
+#ifdef _GNU_SOURCE
 #undef _GNU_SOURCE
+#define _DEFAULT_SOURCE
+#endif
+
 #define __STDC_WANT_LIB_EXT1__ 1
 #include "strerror_.h"
 #include "str_common.h"
@@ -102,13 +108,16 @@ const char* strerror_(int errnum)
 #if HAS_PRINTF_M
     (void) strerror_printf_m;
 #endif
+#if HAS_STRERROR_R
+    (void) strerror_r_xpg;
+#endif
     (void) strerror_posix;
 
 #if HAS_STRERROR_S
     return strerror_s_safe(errnum);
 #elif HAS_PRINTF_M
     return strerror_printf_m(errnum);
-#elif HAS_STRERROR_R_XPG
+#elif HAS_STRERROR_R
     return strerror_r_xpg(errnum);
 #else
     return strerror_posix(errnum);

@@ -17,6 +17,7 @@
  * @param errnum Errno number to make a user generated string for.
  * @returns Pointer to const string representing the error.
  */
+#include <string.h>
 
 /* strerror() is MT-safe for glibc >= 2.32 */
 #if __GLIBC__ >= 2 && __GLIBC_MINOR__ >= 32

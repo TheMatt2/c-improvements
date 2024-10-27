@@ -9,7 +9,7 @@
 
 struct test_func test_funcs[] = {
 #if HAS_STRERROR_MT_SAFE
-    {"strerror_mt_safe", strerror_},
+    {"strerror_mt_safe", (void *) strerror_},
 #endif
 #if HAS_STRERROR_S
     {"strerror_s_safe", strerror_s_safe},
@@ -20,7 +20,7 @@ struct test_func test_funcs[] = {
 #if HAS_STRERROR_R
     {"strerror_r_xpg", strerror_r_xpg},
 #endif
-    {"strerror_posix", strerror_posix},
+    {"strerror_posix", strerror_posix}
 };
 
 size_t test_funcs_maxlen[ARRAY_SIZE(test_funcs)];
